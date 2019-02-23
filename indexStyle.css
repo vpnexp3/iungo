@@ -83,7 +83,6 @@ img{
 input:focus {outline: none; }
 =======
   min-height: 100vh;
-	/*background: linear-gradient(75deg, rgba(255, 180, 1, 0.80), rgba(79, 75, 65, )); rgba(69, 69, 69,1);*/
   background: rgba(40, 40, 40, 1);
 	display: flex;
 	flex-direction: column;
@@ -143,6 +142,14 @@ body {
 <<<<<<< HEAD
 >>>>>>> lol
 =======
+
+img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  height: auto;
+}
 
 input:focus {outline: none; }
 >>>>>>> hhgv
