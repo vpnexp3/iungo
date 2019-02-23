@@ -1,0 +1,18 @@
+{
+	"name": "iunGO",
+	"version": "1.0.0",
+	"description": "Media voting",
+	"main": "index.js",
+	"scripts": {
+		"build": "browserify client_main.js > output.js && browserify host_main.js > output_host.js",
+		"run": "node index.js"
+	},
+	"author": "Landmaster",
+	"license": "AGPL-3.0-or-later",
+	"dependencies": {
+		"buffer": "^5.2.1",
+		"bytebuffer": "^5.0.1",
+		"express": "^4.16.4",
+		"ws": "^6.1.4"
+	}
+}
