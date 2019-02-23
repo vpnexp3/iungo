@@ -102,7 +102,7 @@ wss.on('connection', (ws, req) => {
 				break;
 			case MessageTypes.SONG_REQUEST:
 				https.get('https://api.napster.com/v2.2/tracks/'+encodeURIComponent(obj.trackId)+'?'+querystring.stringify({apikey: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw'}), res => {
-					console.log(res.statusCode);
+					//console.log(res.statusCode);
 					if (res.statusCode === 200) {
 						res.setEncoding('utf8');
 						let rawData = '';
@@ -120,9 +120,17 @@ wss.on('connection', (ws, req) => {
 								}
 								wsToSong.set(ws, obj.trackId);
 								//console.log(obj.trackId);
+								
+								//console.log('Queueing '+obj.trackId);
+								
 								if (currentSong === null) {
 									currentSong = obj.trackId;
-									//console.log(currentSong);
+									
+									for (let endpoint of (nextSongEntries.get(currentSong)||[])) {
+										wsToSong.delete(endpoint);
+									}
+									nextSongEntries.delete(currentSong);
+									// grab host
 									users[userToCode.get(ws)][Symbol.iterator]().next().value.send(JSON.stringify({type: MessageTypes.NEXT_SONG, trackId: currentSong}));
 								}
 							}
@@ -144,6 +152,7 @@ wss.on('connection', (ws, req) => {
 					for (let endpoint of (nextSongEntries.get(currentSong)||[])) {
 						wsToSong.delete(endpoint);
 					}
+					nextSongEntries.delete(currentSong);
 				}
 				ws.send(JSON.stringify({type: MessageTypes.NEXT_SONG, trackId: currentSong}));
 				break;
