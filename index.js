@@ -26,7 +26,7 @@ function genCode(ws) {
 	for ( ; ; codeCounter = (codeCounter+1)%100000) {
 		//console.log(codeCounter);
 		if (users[codeCounter] === undefined) {
-			users[codeCounter] = [ws];
+			users[codeCounter] = new Set([ws]);
 			break;
 		}
 	}
@@ -40,6 +40,16 @@ wss.on('connection', (ws, req) => {
 			case MessageTypes.GENERATE_CODE:
 				let code = genCode(ws);
 				ws.send(JSON.stringify({type: MessageTypes.FOUND_CODE, code: code}));
+				break;
+			case MessageTypes.JOIN:
+				if (typeof obj.code === 'number') {
+					if (users[obj.code] instanceof Set) {
+						users[obj.code].add(ws);
+						ws.send(JSON.stringify({type: MessageTypes.CONFIRM_JOIN}));
+					} else {
+						ws.send(JSON.stringify({type: MessageTypes.DENY_JOIN, message: 'No such code '+obj.code+'!'}));
+					}
+				}
 				break;
 		}
 	});
