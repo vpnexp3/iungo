@@ -113,15 +113,9 @@ input:focus {outline: none; }
 .main-container * {
   margin: 15px;
 }
-
-.main-container input[type="join_code"] {
-	padding: 0 10px 0 10px;
-	color: #463e3e;
-	flex: 1 0 200px;
-}
-
 body {
   margin: 0;
+<<<<<<< Updated upstream
 <<<<<<< HEAD
   color: rgb(255,180,1);
 =======
@@ -132,6 +126,13 @@ body {
   margin: auto;
   width: auto;
   padding: 5px;
+<<<<<<< HEAD
 >>>>>>> Here neelam take this
+=======
+>>>>>>> c97110aab239d3f44cdcf55ab95ed0e816491468
+=======
+  color: rgb(240, 226, 194);
+>>>>>>> Stashed changes
+>>>>>>> Ambox
 }
 >>>>>>> lol
