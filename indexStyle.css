@@ -108,8 +108,15 @@ input:focus {outline: none; }
 .main-container input[type=submit]:hover {
 	box-shadow: inset 1px 1px 1px rgba(0,0,0,0.2);
 }
+
+.main-container input[type="join_code"] {
+	padding: 0 10px 0 10px;
+	color: #463e3e;
+	flex: 1 0 200px;
+}
+
 body {
   margin: 0;
-  color: rgb(240, 226, 194);
+  color: rgb(255,180,1);
 }
 >>>>>>> lol
