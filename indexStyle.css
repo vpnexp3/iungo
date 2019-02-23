@@ -115,10 +115,6 @@ input:focus {outline: none; }
 }
 body {
   margin: 0;
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-  color: rgb(255,180,1);
-=======
   color: rgba(255,180,1,1);
   font-family: 'Fredoka One';
 }
@@ -127,6 +123,7 @@ body {
   width: auto;
   padding: 5px;
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Here neelam take this
 =======
 >>>>>>> c97110aab239d3f44cdcf55ab95ed0e816491468
@@ -134,5 +131,7 @@ body {
   color: rgb(240, 226, 194);
 >>>>>>> Stashed changes
 >>>>>>> Ambox
+=======
+>>>>>>> aslkfn
 }
 >>>>>>> lol
