@@ -1,4 +1,5 @@
 .main-container{
+<<<<<<< HEAD
 
 	display: flex;
 	flex-direction: column;
@@ -80,3 +81,32 @@ img{
 	padding: none;
 }
 input:focus {outline: none; }
+=======
+  min-height: 100vh;
+	/*background: linear-gradient(75deg, rgba(255, 180, 1, 0.80), rgba(79, 75, 65, )); rgba(69, 69, 69,1);*/
+  background: linear-gradient(180deg, rgba(20, 20, 20,1), rgba(20, 20, 20, 0.75));
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+
+.main-container input[type=submit]{
+  margin: auto;
+  display: block;
+	border-radius: 5px 5px 5px 5px;
+	/*border-left: none;*/
+	background: white;
+	flex: 1 0 100px;
+	box-shadow: inset 0px 0px 0px rgba(0,0,0,0.1);
+	transition: box-shadow 0.3s ease;
+}
+
+.main-container input[type=submit]:hover {
+	box-shadow: inset 1px 1px 1px rgba(0,0,0,0.2);
+}
+body {
+  margin: 0;
+  color: rgb(240, 226, 194);
+}
+>>>>>>> lol
