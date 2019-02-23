@@ -94,7 +94,6 @@ input:focus {outline: none; }
 	justify-content: center;
 }
 
-
 .main-container input{
 	margin: auto;
 	display: block;
@@ -159,11 +158,18 @@ main {
 =======
 
 img{
+<<<<<<< HEAD
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 	width: 40%;
 	height: auto;
+=======
+  display: block;
+  margin: auto;
+  width: 40%;
+  height: auto;
+>>>>>>> a
 }
 
 input:focus {outline: none; }
