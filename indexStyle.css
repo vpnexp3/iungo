@@ -1,6 +1,6 @@
 .main-container{
-  min-height: 100vh;
-  background: rgba(40, 40, 40, 1);
+	min-height: 100vh;
+	background: rgba(40, 40, 40, 1);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -8,39 +8,44 @@
 
 
 .main-container input{
-  margin: auto;
-  display: block;
+	margin: auto;
+	display: block;
 	border-radius: 10px;
-  border-color: rgba(255,180,1,1);
-  border-style: solid;
-  background-color: rgba(30,30,30,1);
-  height: 50px;
-  font-size: 20px;
-  color: rgba(255,180,1,1);
-  box-shadow: none;
-  text-align: center;
-  font-family: 'Fredoka One', sans-serif;
+	border-color: rgba(255,180,1,1);
+	border-style: solid;
+	background-color: rgba(30,30,30,1);
+	height: 50px;
+	font-size: 20px;
+	color: rgba(255,180,1,1);
+	box-shadow: none;
+	text-align: center;
+	font-family: 'Fredoka One', sans-serif;
 }
 .main-container input[type=submit]:hover {
-  background-color: rgba(20,20,20,1);
+	background-color: rgba(20,20,20,1);
 }
 .main-container input[type=text] {
-  width: 60%;
-  background-color: rgba(100, 100, 100,1)
+	width: 60%;
+	background-color: rgba(100, 100, 100,1)
 }
 .main-container input[type=submit] {
-  width: 55%;
+	width: 55%;
 }
 
 .main-container * {
-  margin: 15px;
+	margin: 15px;
 }
 body {
-  margin: 0;
-  color: rgba(255,180,1,1);
-  font-family: 'Fredoka One';
+	margin: 0;
+	color: rgba(255,180,1,1);
+	font-family: 'Fredoka One';
+	width: 100%;
+}
+main {
+	width: 100%;
 }
 #join_view {
+<<<<<<< HEAD
   margin: auto;
   width: 100%;
   padding: 5px;
@@ -55,14 +60,19 @@ body {
 >>>>>>> Ambox
 =======
 >>>>>>> aslkfn
+=======
+	margin: auto;
+	width: 100%;
+	padding: 5px;
+>>>>>>> Fix tab characters
 }
 
 img{
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 40%;
-  height: auto;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 40%;
+	height: auto;
 }
 
 input:focus {outline: none; }
