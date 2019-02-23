@@ -2,6 +2,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	display: flex;
 	flex-direction: column;
@@ -92,9 +93,13 @@ input:focus {outline: none; }
 >>>>>>> Here take this
 	background: rgba(40, 40, 40, 1);
 >>>>>>> Fix tab characters
+=======
+
+>>>>>>> Fix
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	height: 100%;
 }
 
 
@@ -102,13 +107,12 @@ input:focus {outline: none; }
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: none;
-	margin-bottom: none;
+	margin-bottom: 20px;
 	padding: none;
 	display: block;
 	border-radius: 10px;
-	border-color: rgba(255,180,1,1);
 	border-style: solid;
-	background-color: rgba(30,30,30,1);
+	border-color: rgba(255,180,1,1);
 	height: 50px;
 	font-size: 20px;
 	color: rgba(255,180,1,1);
@@ -117,7 +121,7 @@ input:focus {outline: none; }
 	font-family: 'Fredoka One', sans-serif;
 }
 .main-container input[type=submit]:hover {
-	background-color: rgba(20,20,20,1);
+	background-color: rgba(17,17,17,1);
 }
 .main-container input[type=text] {
 	width: 60%;
@@ -125,10 +129,11 @@ input:focus {outline: none; }
 }
 .main-container input[type=submit] {
 	width: 55%;
+	background-color: rgba(25,25,25,1);
 }
 
 .main-container * {
-	margin: 15px;
+	margin: 5px;
 }
 body {
 	margin: 0;
@@ -136,6 +141,7 @@ body {
 	font-family: 'Fredoka One';
 	width: 100%;
 	padding: none;
+	background: rgba(40, 40, 40, 1);
 }
 main {
 	width: 100%;
@@ -145,6 +151,8 @@ main {
 #join_view {
 	margin-left: auto;
 	margin-right: auto;
+	margin-top: none;
+	margin-bottom: none;
 	width: 100%;
 	padding: 5px;
 }
