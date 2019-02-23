@@ -1,5 +1,4 @@
 .main-container{
-	min-height: 100vh;
 	background: rgba(40, 40, 40, 1);
 	display: flex;
 	flex-direction: column;
@@ -8,7 +7,11 @@
 
 
 .main-container input{
-	margin: auto;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: none;
+	margin-bottom: none;
+	padding: none;
 	display: block;
 	border-radius: 10px;
 	border-color: rgba(255,180,1,1);
@@ -40,22 +43,33 @@ body {
 	color: rgba(255,180,1,1);
 	font-family: 'Fredoka One';
 	width: 100%;
+	padding: none;
 }
 main {
 	width: 100%;
+	padding: none;
+	margin: none;
 }
 #join_view {
-	margin: auto;
+	margin-left: auto;
+	margin-right: auto;
 	width: 100%;
 	padding: 5px;
 }
 
 img{
-	display: block;
+	display: flex;
+	width: 100%;
+	height: auto;
+	margin: none;
+	padding: none;
+}
+#header_img {
+	max-height: 250px;
 	margin-left: auto;
 	margin-right: auto;
+	margin-top: none;
 	width: 40%;
-	height: auto;
+	padding: none;
 }
-
 input:focus {outline: none; }
