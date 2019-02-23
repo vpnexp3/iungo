@@ -95,11 +95,14 @@ input:focus {outline: none; }
   margin: auto;
   display: block;
 	border-radius: 5px 5px 5px 5px;
-	/*border-left: none;*/
-	background: white;
+  border-color: rgba(255,180,1,1);
 	flex: 1 0 100px;
-	box-shadow: inset 0px 0px 0px rgba(0,0,0,0.1);
 	transition: box-shadow 0.3s ease;
+  background-color: rgba(20,20,20,1);
+  width: 100px;
+  height: 35px;
+  font-size: 20px;
+  color: rgba(255,180,1,1);
 }
 
 .main-container input[type=submit]:hover {
