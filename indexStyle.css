@@ -6,6 +6,7 @@
 	justify-content: center;
 }
 
+
 .main-container input{
 	margin: auto;
 	display: block;
@@ -68,6 +69,15 @@ main {
 
 img{
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  height: auto;
+=======
+>>>>>>> ayyyy LMAOOO
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
