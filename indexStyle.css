@@ -24,6 +24,9 @@
 	text-align: center;
 	font-family: 'Fredoka One', sans-serif;
 }
+.main-container input::placeholder {
+	color: rgba(60, 60, 60, 1)
+}
 .main-container input[type=submit]:hover {
 	background-color: rgba(17,17,17,1);
 }
