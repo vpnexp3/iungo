@@ -13,17 +13,21 @@ module.exports = getWS;
 const getWS = require('./get_ws');
 const MessageTypes = require('./message_types');
 const ViewManager = require('./view_manager');
+const NapsterUtils = require("./napster_utils");
 
 ViewManager.addView('generate_view');
 ViewManager.addView('code_view');
 
 ViewManager.setView('generate_view');
 
+Napster.init({consumerKey: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw', isHTML5Compatible: true});
+
 const ws = new WebSocket(getWS('/'));
 
 let generateCodeBtn = document.getElementById('generate_code');
 generateCodeBtn.addEventListener('click', () => {
 	ws.send(JSON.stringify({type: MessageTypes.GENERATE_CODE}));
+	//Napster.player.play('Tra.5156528');
 });
 
 let codeDisps = document.getElementsByClassName('code_display');
@@ -41,7 +45,16 @@ ws.addEventListener('message', (event) => {
 	}
 });
 
-},{"./get_ws":1,"./message_types":3,"./view_manager":4}],3:[function(require,module,exports){
+Napster.player.on('ready', function(e) {
+	console.log('Ready!');
+	let params = NapsterUtils.getParameters();
+	if (params.accessToken) {
+		Napster.member.set(params);
+	}
+	console.log(params);
+});
+
+},{"./get_ws":1,"./message_types":3,"./napster_utils":4,"./view_manager":5}],3:[function(require,module,exports){
 /**
  * @author Landmaster
  */
@@ -54,6 +67,44 @@ module.exports = {
 	DENY_JOIN: 'deny_join'
 };
 },{}],4:[function(require,module,exports){
+/**
+ * @author Landmaster
+ */
+
+const NapsterUtils = {};
+
+NapsterUtils.refresh = function (callback) {
+	jQuery.ajax({
+		url: '/reauthorize',
+		method: 'GET',
+		data: { refreshToken: Napster.member.refreshToken },
+		success: function(data) {
+			Napster.member.set({
+				accessToken: data.access_token,
+				refreshToken: data.refresh_token
+			});
+			if (callback) {
+				callback(data);
+			}
+		}
+	});
+};
+
+NapsterUtils.getParameters = function () {
+	let query = window.location.search.substring(1);
+	let parameters = {};
+	if (query) {
+		query.split('&').forEach(function(item) {
+			let param = item.split('=');
+			parameters[param[0]] = param[1];
+		});
+	}
+	return parameters;
+};
+
+
+module.exports = NapsterUtils;
+},{}],5:[function(require,module,exports){
 /**
  * @author Landmaster
  */

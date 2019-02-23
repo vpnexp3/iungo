@@ -8,9 +8,13 @@ const MessageTypes = require('./message_types');
 const ViewManager = require('./view_manager');
 
 ViewManager.addView('join_view');
+ViewManager.addView('search_view');
+
 ViewManager.setView('join_view');
 
-console.log(getWS('/'));
+//Napster.init({consumerKey: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw', isHTML5Compatible: true});
+
+//console.log(getWS('/'));
 const ws = new WebSocket(getWS('/'));
 
 let joinCode = document.getElementById("join_code");

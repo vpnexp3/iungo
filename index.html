@@ -2,15 +2,20 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Iungo</title>
+		<title>iunGO</title>
 	</head>
 	<body>
 		<div id="join_view">
 			<label for="join_code">Enter Join Code</label><input type="text" id="join_code" name="join_code" /><br />
 			<span class="error_msg" id="error_join"></span>
 		</div>
+		<div id="search_view">
+			<label for="search">Search</label><input type="text" id="search" name="search" />
+			<div id="search_results">
+			</div>
+		</div>
 		
-		<script src="build/jquery-3.3.1.min.js"></script>
+		<script src="build/jquery-1.12.4.min.js"></script>
 		<script src="build/napster.min.js"></script>
 		<script src="build/output.js"></script>
 	</body>
