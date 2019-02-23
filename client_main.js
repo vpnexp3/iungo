@@ -22,7 +22,7 @@ let errorJoin = document.getElementById("error_join");
 joinCode.addEventListener("keypress", (e) => {
 	if (e.keyCode === 13 /* enter */) {
 		e.preventDefault();
-		let parsedCode = parseInt(joinCode.value);
+		let parsedCode = parseInt(joinCode.value, 10);
 		if (!isNaN(parsedCode)) {
 			ws.send(JSON.stringify({type: MessageTypes.JOIN, code: parsedCode}));
 		} else {
@@ -45,11 +45,31 @@ ws.addEventListener('message', event => {
 });
 
 let searchBar = document.getElementById('search');
+let searchResults = document.getElementById('search_results');
 searchBar.addEventListener("keypress", (e) => {
 	if (e.keyCode === 13 /* enter */) {
 		e.preventDefault();
 		Napster.api.get(false, '/search?query='+encodeURIComponent(searchBar.value)+'&type=track', (data) => {
-			console.log(data.search.data.tracks);
+			//console.log(data.search.data.tracks);
+			searchResults.innerHTML = '';
+			for (let track of data.search.data.tracks) {
+				let trackCont = document.createElement('div');
+				trackCont.dataset.trackId = track.id;
+				
+				let trackNameSpan = document.createElement('span');
+				trackNameSpan.classList.add('track_name');
+				trackNameSpan.textContent = track.name;
+				trackCont.appendChild(trackNameSpan);
+				
+				trackCont.appendChild(document.createTextNode(' by '));
+				
+				let artistNameSpan = document.createElement('span');
+				artistNameSpan.classList.add('artist_name');
+				artistNameSpan.textContent = track.artistName;
+				trackCont.appendChild(artistNameSpan);
+				
+				searchResults.appendChild(trackCont);
+			}
 		});
 	}
 });
