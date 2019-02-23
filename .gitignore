@@ -1,2 +1,4 @@
 node_modules
 .idea
+build/output.js
+build/output_host.js
