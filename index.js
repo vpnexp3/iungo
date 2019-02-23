@@ -46,6 +46,16 @@ app.get('/authorize', (clientRequest, clientResponse) => {
 app.get('/', (req, res) => {
 	res.sendFile(__dirname+'/index.html');
 });
+<<<<<<< HEAD
+=======
+app.get('/host_app', (req,res) => {
+	res.sendFile(__dirname+'/host.html');
+});
+app.get('/indexStyle.css', (req, res) => {
+	res.sendFile(__dirname+'/indexStyle.css');
+})
+app.use('/images', express.static('images'));
+>>>>>>> Add content files
 
 let codeCounter = 0;
 const users = new Array(100000);
@@ -191,4 +201,3 @@ wss.on('connection', (ws, req) => {
 		}
 	});
 });
-
