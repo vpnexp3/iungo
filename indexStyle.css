@@ -98,7 +98,6 @@ input:focus {outline: none; }
   border-color: rgba(255,180,1,1);
   border-style: solid;
   background-color: rgba(30,30,30,1);
-  width: 200px;
   height: 50px;
   font-size: 20px;
   color: rgba(255,180,1,1);
@@ -108,6 +107,13 @@ input:focus {outline: none; }
 }
 .main-container input[type=submit]:hover {
   background-color: rgba(20,20,20,1);
+}
+.main-container input[type=text] {
+  width: 60%;
+  background-color: rgba(100, 100, 100,1)
+}
+.main-container input[type=submit] {
+  width: 55%;
 }
 
 .main-container * {
@@ -120,7 +126,7 @@ body {
 }
 #join_view {
   margin: auto;
-  width: auto;
+  width: 100%;
   padding: 5px;
 <<<<<<< HEAD
 <<<<<<< HEAD
