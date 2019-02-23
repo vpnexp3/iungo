@@ -55,6 +55,9 @@ app.get('/indexStyle.css', (req, res) => {
 	res.sendFile(__dirname+'/indexStyle.css');
 })
 app.use('/images', express.static('images'));
+<<<<<<< HEAD
+>>>>>>> Add content files
+=======
 >>>>>>> Add content files
 
 let codeCounter = 0;
