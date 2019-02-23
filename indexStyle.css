@@ -31,6 +31,7 @@
 .main-container input::placeholder {
 	color: rgba(60, 60, 60, 1)
 }
+<<<<<<< HEAD
 .main-container input[type=submit]:hover {
 	background-color: rgba(17,17,17,1);
 }
@@ -120,6 +121,8 @@ input:focus {outline: none; }
 	text-align: center;
 	font-family: 'Fredoka One', sans-serif;
 }
+=======
+>>>>>>> Fix 2
 .main-container input[type=submit]:hover {
 	background-color: rgba(17,17,17,1);
 }
