@@ -45,50 +45,17 @@ main {
 	width: 100%;
 }
 #join_view {
-<<<<<<< HEAD
-  margin: auto;
-  width: 100%;
-  padding: 5px;
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> Here neelam take this
-=======
->>>>>>> c97110aab239d3f44cdcf55ab95ed0e816491468
-=======
-  color: rgb(240, 226, 194);
->>>>>>> Stashed changes
->>>>>>> Ambox
-=======
->>>>>>> aslkfn
-=======
 	margin: auto;
 	width: 100%;
 	padding: 5px;
->>>>>>> Fix tab characters
 }
 
 img{
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 40%;
-  height: auto;
-=======
->>>>>>> ayyyy LMAOOO
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 	width: 40%;
 	height: auto;
-=======
-  display: block;
-  margin: auto;
-  width: 40%;
-  height: auto;
->>>>>>> a
 }
 
 input:focus {outline: none; }
