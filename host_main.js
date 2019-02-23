@@ -6,6 +6,8 @@ const getWS = require('./get_ws');
 const MessageTypes = require('./message_types');
 const ViewManager = require('./view_manager');
 const NapsterUtils = require("./napster_utils");
+const Promise = require('bluebird');
+const ManualResolvePromise = require('./manual_resolve_promise');
 
 ViewManager.addView('generate_view');
 ViewManager.addView('code_view');
@@ -35,14 +37,22 @@ ws.addEventListener('message', (event) => {
 			}
 			ViewManager.setView('code_view');
 			break;
+		case MessageTypes.NEXT_SONG:
+			//console.log(obj.trackId);
+			napsterPromise.then(() => {
+				Napster.player.play(obj.trackId);
+			});
+			break;
 	}
 });
 
+let napsterPromise = new ManualResolvePromise();
 Napster.player.on('ready', e => {
 	//console.log('Ready!');
 	let params = NapsterUtils.getParameters();
 	if (params.accessToken) {
 		Napster.member.set(params);
 	}
+	napsterPromise.resolve();
 	//console.log(params);
 });

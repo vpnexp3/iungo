@@ -7,6 +7,8 @@ const WebSocket = require('ws');
 const MessageTypes = require('./message_types');
 const querystring = require("querystring");
 const request = require('request');
+const https = require('https');
+const Promise = require('bluebird');
 
 const app = express();
 
@@ -49,6 +51,7 @@ app.get('/host_app', (req,res) => {
 
 let codeCounter = 0;
 const users = new Array(100000);
+const userToCode = new Map();
 
 const httpServer = app.listen(8000);
 const wss = new WebSocket.Server({server: httpServer});
@@ -58,11 +61,25 @@ function genCode(ws) {
 		//console.log(codeCounter);
 		if (users[codeCounter] === undefined) {
 			users[codeCounter] = new Set([ws]);
+			userToCode.set(ws, codeCounter);
 			break;
 		}
 	}
 	return codeCounter;
 }
+
+let currentSong = null;
+/**
+ *
+ * @type {Map<string, Set<WebSocket>>}
+ */
+let nextSongEntries = new Map();
+
+/**
+ *
+ * @type {Map<WebSocket, string>}
+ */
+let wsToSong = new Map();
 
 wss.on('connection', (ws, req) => {
 	ws.on('message', data => {
@@ -76,11 +93,59 @@ wss.on('connection', (ws, req) => {
 				if (typeof obj.code === 'number') {
 					if (users[obj.code] instanceof Set) {
 						users[obj.code].add(ws);
+						userToCode.set(ws, obj.code);
 						ws.send(JSON.stringify({type: MessageTypes.CONFIRM_JOIN}));
 					} else {
 						ws.send(JSON.stringify({type: MessageTypes.DENY_JOIN, message: 'No such code '+obj.code+'!'}));
 					}
 				}
+				break;
+			case MessageTypes.SONG_REQUEST:
+				https.get('https://api.napster.com/v2.2/tracks/'+encodeURIComponent(obj.trackId)+'?'+querystring.stringify({apikey: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw'}), res => {
+					console.log(res.statusCode);
+					if (res.statusCode === 200) {
+						res.setEncoding('utf8');
+						let rawData = '';
+						res.on('data', (chunk) => { rawData += chunk; });
+						res.on('end', () => {
+							let parsed = JSON.parse(rawData);
+							if (parsed.tracks.length >= 1) {
+								if (!nextSongEntries.has(obj.trackId)) {
+									nextSongEntries.set(obj.trackId, new Set());
+								}
+								nextSongEntries.get(obj.trackId).add(ws);
+								
+								if (wsToSong.has(ws)) { // delete previous
+									nextSongEntries.get(wsToSong.get(ws)).delete(ws);
+								}
+								wsToSong.set(ws, obj.trackId);
+								//console.log(obj.trackId);
+								if (currentSong === null) {
+									currentSong = obj.trackId;
+									//console.log(currentSong);
+									users[userToCode.get(ws)][Symbol.iterator]().next().value.send(JSON.stringify({type: MessageTypes.NEXT_SONG, trackId: currentSong}));
+								}
+							}
+						});
+					}
+				});
+				break;
+			case MessageTypes.NEXT_SONG:
+				let curMax = 0;
+				let curMaxSong = null;
+				for (let songID of nextSongEntries.keys()) {
+					if (curMax < nextSongEntries.get(songID).size) {
+						curMax = nextSongEntries.get(songID).size;
+						curMaxSong = songID;
+					}
+				}
+				currentSong = curMaxSong;
+				if (currentSong) {
+					for (let endpoint of (nextSongEntries.get(currentSong)||[])) {
+						wsToSong.delete(endpoint);
+					}
+				}
+				ws.send(JSON.stringify({type: MessageTypes.NEXT_SONG, trackId: currentSong}));
 				break;
 		}
 	});

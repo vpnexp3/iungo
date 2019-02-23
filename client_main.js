@@ -5,6 +5,7 @@
 const getWS = require('./get_ws');
 const MessageTypes = require('./message_types');
 const ViewManager = require('./view_manager');
+const Promise = require('bluebird');
 
 ViewManager.addView('join_view');
 ViewManager.addView('search_view');
@@ -49,11 +50,12 @@ let searchResults = document.getElementById('search_results');
 searchBar.addEventListener("keypress", (e) => {
 	if (e.keyCode === 13 /* enter */) {
 		e.preventDefault();
-		Napster.api.get(false, '/search?query='+encodeURIComponent(searchBar.value)+'&type=track', (data) => {
+		Napster.api.get(true, '/search?query='+encodeURIComponent(searchBar.value)+'&type=track', (data) => {
 			//console.log(data.search.data.tracks);
 			searchResults.innerHTML = '';
 			for (let track of data.search.data.tracks) {
 				let trackCont = document.createElement('div');
+				trackCont.classList.add('track_container');
 				trackCont.dataset.trackId = track.id;
 				
 				let trackNameSpan = document.createElement('span');
@@ -67,6 +69,10 @@ searchBar.addEventListener("keypress", (e) => {
 				artistNameSpan.classList.add('artist_name');
 				artistNameSpan.textContent = track.artistName;
 				trackCont.appendChild(artistNameSpan);
+				
+				trackCont.addEventListener('click', (e) => {
+					ws.send(JSON.stringify({type: MessageTypes.SONG_REQUEST, trackId: trackCont.dataset.trackId}));
+				});
 				
 				searchResults.appendChild(trackCont);
 			}
