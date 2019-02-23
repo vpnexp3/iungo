@@ -2,6 +2,11 @@
  * @author Landmaster
  */
 
+const getWS = require('./get_ws');
+
+console.log(getWS('/'));
+const ws = new WebSocket(getWS('/'));
+
 let joinCode = document.getElementById("join_code");
 joinCode.addEventListener("keypress", (e) => {
 	if (e.keyCode === 13 /* enter */) {
