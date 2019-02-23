@@ -36,7 +36,7 @@ app.get('/authorize', (clientRequest, clientResponse) => {
 	}, (error, response, body) => {
 		//console.log(body);
 		body = JSON.parse(body);
-		clientResponse.redirect(clientRequest.protocol+'://'+clientRequest.hostname + ':' + 8000 + '/host_app?' + querystring.stringify({
+		clientResponse.redirect(clientRequest.protocol+'://'+clientRequest.hostname + ':' + 8000 + '?' + querystring.stringify({
 			accessToken: body.access_token,
 			refreshToken: body.refresh_token
 		}));
@@ -44,9 +44,6 @@ app.get('/authorize', (clientRequest, clientResponse) => {
 });
 app.get('/', (req, res) => {
 	res.sendFile(__dirname+'/index.html');
-});
-app.get('/host_app', (req,res) => {
-	res.sendFile(__dirname+'/host.html');
 });
 
 let codeCounter = 0;

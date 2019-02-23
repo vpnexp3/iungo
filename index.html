@@ -6,12 +6,22 @@
 	</head>
 	<body>
 		<div id="join_view">
+			<button id="to_host">Hosting?</button>
 			<label for="join_code">Enter Join Code</label><input type="text" id="join_code" name="join_code" /><br />
 			<span class="error_msg" id="error_join"></span>
 		</div>
 		<div id="search_view">
 			<label for="search">Search</label><input type="text" id="search" name="search" />
 			<div id="search_results">
+			</div>
+		</div>
+		<div id="generate_view">
+			<button id="to_join">Joining a host?</button>
+			<button id="generate_code">Generate code</button>
+		</div>
+		<div id="code_view">
+			<div>Your code is <span class="code_display"></span></div>
+			<div id="playing_queue">
 			</div>
 		</div>
 		

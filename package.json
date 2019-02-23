@@ -4,7 +4,7 @@
 	"description": "Media voting",
 	"main": "index.js",
 	"scripts": {
-		"build": "browserify client_main.js > build/output.js && browserify host_main.js > build/output_host.js",
+		"build": "browserify client_main.js > build/output.js",
 		"run": "node index.js"
 	},
 	"author": "Landmaster",

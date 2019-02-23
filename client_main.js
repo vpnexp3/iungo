@@ -5,12 +5,16 @@
 const getWS = require('./get_ws');
 const MessageTypes = require('./message_types');
 const ViewManager = require('./view_manager');
+const NapsterUtils = require("./napster_utils");
 const Promise = require('bluebird');
+const ManualResolvePromise = require('./manual_resolve_promise');
 
 ViewManager.addView('join_view');
 ViewManager.addView('search_view');
+ViewManager.addView('generate_view');
+ViewManager.addView('code_view');
 
-ViewManager.setView('join_view');
+ViewManager.setView(NapsterUtils.getParameters().accessToken ? 'generate_view' : 'join_view');
 
 Napster.init({consumerKey: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw', isHTML5Compatible: true});
 
@@ -41,6 +45,29 @@ ws.addEventListener('message', event => {
 			break;
 		case MessageTypes.DENY_JOIN:
 			errorJoin.textContent = obj.message;
+			break;
+		case MessageTypes.FOUND_CODE:
+			for (let codeDisp of codeDisps) {
+				codeDisp.textContent = obj.code;
+			}
+			ViewManager.setView('code_view');
+			break;
+		case MessageTypes.NEXT_SONG:
+			//console.log(obj.trackId);
+			if (obj.trackId) {
+				napsterPromise.then(() => {
+					Napster.player.play(obj.trackId);
+					currentSong = obj.trackId;
+					window.addEventListener('message', event => {
+						if (event.data.data.code === 'PlayComplete' && currentSong !== null) {
+							currentSong = null;
+							ws.send(JSON.stringify({type: MessageTypes.NEXT_SONG}));
+						}
+					});
+				});
+			} else {
+				currentSong = null;
+			}
 			break;
 	}
 });
@@ -79,3 +106,37 @@ searchBar.addEventListener("keypress", (e) => {
 		});
 	}
 });
+
+let toHostBtn = document.getElementById('to_host');
+toHostBtn.addEventListener('click', () => {
+	ViewManager.setView('generate_view');
+	let params = NapsterUtils.getParameters();
+	if (!params.accessToken) {
+		location.href = '/host';
+	}
+});
+
+let toJoinBtn = document.getElementById('to_join');
+toHostBtn.addEventListener('click', () => {
+	ViewManager.setView('join_view');
+});
+
+let napsterPromise = new ManualResolvePromise();
+Napster.player.on('ready', e => {
+	//console.log('Ready!');
+	let params = NapsterUtils.getParameters();
+	if (params.accessToken) {
+		Napster.member.set(params);
+	}
+	napsterPromise.resolve();
+	//console.log(params);
+});
+
+let generateCodeBtn = document.getElementById('generate_code');
+generateCodeBtn.addEventListener('click', () => {
+	ws.send(JSON.stringify({type: MessageTypes.GENERATE_CODE}));
+});
+
+let codeDisps = document.getElementsByClassName('code_display');
+
+let currentSong = null;
