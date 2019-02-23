@@ -9,7 +9,7 @@ NapsterUtils.refresh = function (callback) {
 		url: '/reauthorize',
 		method: 'GET',
 		data: { refreshToken: Napster.member.refreshToken },
-		success: function(data) {
+		success: data => {
 			Napster.member.set({
 				accessToken: data.access_token,
 				refreshToken: data.refresh_token
@@ -32,6 +32,5 @@ NapsterUtils.getParameters = function () {
 	}
 	return parameters;
 };
-
 
 module.exports = NapsterUtils;

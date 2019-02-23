@@ -12,6 +12,8 @@ ViewManager.addView('code_view');
 
 ViewManager.setView('generate_view');
 
+//let napsterReady = false;
+
 Napster.init({consumerKey: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw', isHTML5Compatible: true});
 
 const ws = new WebSocket(getWS('/'));
@@ -19,7 +21,6 @@ const ws = new WebSocket(getWS('/'));
 let generateCodeBtn = document.getElementById('generate_code');
 generateCodeBtn.addEventListener('click', () => {
 	ws.send(JSON.stringify({type: MessageTypes.GENERATE_CODE}));
-	//Napster.player.play('Tra.5156528');
 });
 
 let codeDisps = document.getElementsByClassName('code_display');
@@ -37,11 +38,11 @@ ws.addEventListener('message', (event) => {
 	}
 });
 
-Napster.player.on('ready', function(e) {
-	console.log('Ready!');
+Napster.player.on('ready', e => {
+	//console.log('Ready!');
 	let params = NapsterUtils.getParameters();
 	if (params.accessToken) {
 		Napster.member.set(params);
 	}
-	console.log(params);
+	//console.log(params);
 });

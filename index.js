@@ -19,7 +19,7 @@ app.get('/host', (req,res) => {
 	});
 	res.redirect(path);
 });
-app.get('/authorize', function(clientRequest, clientResponse) {
+app.get('/authorize', (clientRequest, clientResponse) => {
 	//console.log(clientRequest.query.code);
 	request.post({
 		url: 'https://api.rhapsody.com/oauth/access_token',
@@ -31,7 +31,7 @@ app.get('/authorize', function(clientRequest, clientResponse) {
 			redirect_uri: clientRequest.protocol+'://'+clientRequest.hostname + ':' + 8000 + '/authorize',
 			grant_type: 'authorization_code'
 		}
-	}, function(error, response, body) {
+	}, (error, response, body) => {
 		//console.log(body);
 		body = JSON.parse(body);
 		clientResponse.redirect(clientRequest.protocol+'://'+clientRequest.hostname + ':' + 8000 + '/host_app?' + querystring.stringify({

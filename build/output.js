@@ -12,7 +12,7 @@ ViewManager.addView('search_view');
 
 ViewManager.setView('join_view');
 
-//Napster.init({consumerKey: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw', isHTML5Compatible: true});
+Napster.init({consumerKey: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw', isHTML5Compatible: true});
 
 //console.log(getWS('/'));
 const ws = new WebSocket(getWS('/'));
@@ -37,11 +37,21 @@ ws.addEventListener('message', event => {
 	//console.log('Teehee!');
 	switch (obj.type) {
 		case MessageTypes.CONFIRM_JOIN:
-			console.log('Illuminati confirmed');
+			ViewManager.setView('search_view');
 			break;
 		case MessageTypes.DENY_JOIN:
 			errorJoin.textContent = obj.message;
 			break;
+	}
+});
+
+let searchBar = document.getElementById('search');
+searchBar.addEventListener("keypress", (e) => {
+	if (e.keyCode === 13 /* enter */) {
+		e.preventDefault();
+		Napster.api.get(false, '/search?query='+encodeURIComponent(searchBar.value)+'&type=track', (data) => {
+			console.log(data);
+		});
 	}
 });
 

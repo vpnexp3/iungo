@@ -20,6 +20,8 @@ ViewManager.addView('code_view');
 
 ViewManager.setView('generate_view');
 
+//let napsterReady = false;
+
 Napster.init({consumerKey: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw', isHTML5Compatible: true});
 
 const ws = new WebSocket(getWS('/'));
@@ -27,7 +29,6 @@ const ws = new WebSocket(getWS('/'));
 let generateCodeBtn = document.getElementById('generate_code');
 generateCodeBtn.addEventListener('click', () => {
 	ws.send(JSON.stringify({type: MessageTypes.GENERATE_CODE}));
-	//Napster.player.play('Tra.5156528');
 });
 
 let codeDisps = document.getElementsByClassName('code_display');
@@ -45,13 +46,13 @@ ws.addEventListener('message', (event) => {
 	}
 });
 
-Napster.player.on('ready', function(e) {
-	console.log('Ready!');
+Napster.player.on('ready', e => {
+	//console.log('Ready!');
 	let params = NapsterUtils.getParameters();
 	if (params.accessToken) {
 		Napster.member.set(params);
 	}
-	console.log(params);
+	//console.log(params);
 });
 
 },{"./get_ws":1,"./message_types":3,"./napster_utils":4,"./view_manager":5}],3:[function(require,module,exports){
@@ -78,7 +79,7 @@ NapsterUtils.refresh = function (callback) {
 		url: '/reauthorize',
 		method: 'GET',
 		data: { refreshToken: Napster.member.refreshToken },
-		success: function(data) {
+		success: data => {
 			Napster.member.set({
 				accessToken: data.access_token,
 				refreshToken: data.refresh_token
@@ -101,7 +102,6 @@ NapsterUtils.getParameters = function () {
 	}
 	return parameters;
 };
-
 
 module.exports = NapsterUtils;
 },{}],5:[function(require,module,exports){
