@@ -3,6 +3,11 @@
  */
 
 const getWS = require('./get_ws');
+const MessageTypes = require('./message_types');
+const ViewManager = require('./view_manager');
+
+ViewManager.addView('join_view');
+ViewManager.setView('join_view');
 
 console.log(getWS('/'));
 const ws = new WebSocket(getWS('/'));

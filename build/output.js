@@ -4,6 +4,11 @@
  */
 
 const getWS = require('./get_ws');
+const MessageTypes = require('./message_types');
+const ViewManager = require('./view_manager');
+
+ViewManager.addView('join_view');
+ViewManager.setView('join_view');
 
 console.log(getWS('/'));
 const ws = new WebSocket(getWS('/'));
@@ -16,11 +21,45 @@ joinCode.addEventListener("keypress", (e) => {
 	}
 });
 
-},{"./get_ws":2}],2:[function(require,module,exports){
+},{"./get_ws":2,"./message_types":3,"./view_manager":4}],2:[function(require,module,exports){
 /**
  * @author Landmaster
  */
 
 const getWS = path => (location.protocol === 'https:' ? 'wss:' : 'ws:') + '//' + location.hostname + (location.port ? ':'+location.port : '') + path;
 module.exports = getWS;
+},{}],3:[function(require,module,exports){
+/**
+ * @author Landmaster
+ */
+
+module.exports = {
+	GENERATE_CODE: 'generate_code',
+	FOUND_CODE: 'found_code'
+};
+},{}],4:[function(require,module,exports){
+/**
+ * @author Landmaster
+ */
+
+/**
+ *
+ * @type {Map<string, Element>}
+ */
+const viewMap = new Map();
+
+const ViewManager = {};
+ViewManager.addView = function (viewID) {
+	viewMap.set(viewID, document.getElementById(viewID));
+};
+ViewManager.setView = function (viewID) {
+	for ([id, view] of viewMap) {
+		if (id === viewID) {
+			view.style.display = '';
+		} else {
+			view.style.display = 'none';
+		}
+	}
+};
+module.exports = ViewManager;
 },{}]},{},[1]);

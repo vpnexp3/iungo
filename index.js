@@ -40,6 +40,7 @@ wss.on('connection', (ws, req) => {
 			case MessageTypes.GENERATE_CODE:
 				let code = genCode(ws);
 				ws.send(JSON.stringify({type: MessageTypes.FOUND_CODE, code: code}));
+				break;
 		}
 	});
 });
