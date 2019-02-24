@@ -5,6 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"build": "browserify client_main.js > build/output.js",
+		"start": "node index.js",
 		"run": "node index.js"
 	},
 	"author": "Landmaster",
