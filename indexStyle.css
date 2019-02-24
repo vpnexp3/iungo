@@ -11,7 +11,7 @@ body input{
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: none;
-	margin-bottom: 20px;
+	margin-bottom: 7px;
 	padding: none;
 	display: block;
 	border-radius: 10px;
@@ -31,11 +31,11 @@ body input[type=submit]:hover {
 	background-color: rgba(17,17,17,1);
 }
 body input[type=text] {
-	width: 60%;
+	width: 30%;
 	background-color: rgba(120, 120, 120,1)
 }
 body input[type=submit] {
-	width: 55%;
+	width: 10%;
 	background-color: rgba(25,25,25,1);
 }
 
@@ -74,6 +74,7 @@ img{
 	margin-top: none;
 	width: 40%;
 	padding: none;
+	margin-bottom: 25px;
 }
 input:focus {
 	outline: none;
