@@ -7,7 +7,7 @@
 		"build": "browserify client_main.js > build/output.js",
 		"start": "node index.js",
 		"run": "node index.js",
-		"heroku-postbuild": "browserify client_main.js > build/output.js"
+		"heroku-postbuild": "npm install -g browserify && browserify client_main.js > build/output.js"
 	},
 	"author": "Landmaster",
 	"license": "AGPL-3.0-or-later",
