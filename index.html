@@ -3,30 +3,42 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<title>iunGO</title>
+		<link rel="stylesheet" href="css/main.css" type="text/css" />
 	</head>
 	<body>
+		<div id="header_img"><img src='images/iungo_orange.png' /></div>
 		<div id="join_view">
-			<button id="to_host">Hosting?</button><br />
-			<label for="join_code">Enter Join Code</label><input type="text" id="join_code" name="join_code" /><br />
+			<div id="jleft">
+				<div id="jleft-inner">
+					<input type="text" id="join_code" name="join_code" placeholder="Enter Session Code" /><br />
+					<input type="submit" id="join_button" value="Join" />
+				</div>
+			</div>
+			<div id="jright">
+				<div id="jright-inner">
+					<input type="submit" name="to_host" id="to_host" value="Host a Session" />
+				</div>
+			</div>
+			<div id="divider"></div>
 			<span class="error_msg" id="error_join"></span>
 		</div>
-		<div id="hub_view">
+		<div id="hub_view" style="display:none;">
 			<div id="now_playing_client_cont" style="display: none;">
 				Now playing: <span id="current_track_client"></span> by <span id="current_artist_client"></span>
 			</div>
 			<div class="trending">
 			</div>
 		</div>
-		<div id="search_view">
-			<label for="search">Search</label><input type="text" id="search" name="search" />
+		<div id="search_view" style="display:none;">
+			<input type="text" id="search" name="search" placeholder="Search" />
 			<div id="search_results">
 			</div>
 		</div>
-		<div id="generate_view">
+		<div id="generate_view" style="display:none;">
 			<button id="to_join">Joining a host?</button><br />
 			<button id="generate_code">Generate code</button>
 		</div>
-		<div id="code_view">
+		<div id="code_view" style="display:none;">
 			<div id="now_playing_cont" style="display:none;">
 				Now playing: <span id="current_track"></span> by <span id="current_artist"></span> (<span id="elapsed_time"></span>)
 			</div>

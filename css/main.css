@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One');
+
+body {
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: 0;
+	color: rgba(255,180,1,1);
+	font-family: 'Fredoka One', sans-serif;
+	width: 100%;
+	height: 100vh;
+	padding: 0;
+	background: rgba(40, 40, 40, 1);
+}
+
+#header_img {
+	max-height: 250px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: -12%;
+	height: auto;
+	width: 35%;
+	padding: 0;
+	margin-bottom: 40px;
+}
+
+img{
+	display: flex;
+	width: 100%;
+	height: auto;
+	margin: 0;
+	padding: 0;
+	max-height: 250px;
+}
+
+#join_view {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: none;
+	margin-bottom: none;
+	width: 100%;
+	height: 40%;
+	padding: 5px;
+}
+#join_view input{
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: none;
+	margin-bottom: 7px;
+	padding: 0px;
+	display: block;
+	border-radius: 10px;
+	border-style: solid;
+	border-color: rgba(255,180,1,1);
+	height: 50px;
+	font-size: 20px;
+	color: rgba(255,180,1,1);
+	box-shadow: none;
+	text-align: center;
+	font-family: 'Fredoka One', sans-serif;
+}
+#join_view input::placeholder {
+	color: rgba(60, 60, 60, 1)
+}
+#join_view input[type=submit]:hover {
+	background-color: rgba(17,17,17,1);
+}
+#join_view input[type=text] {
+	width: 100%;
+	background-color: rgba(120, 120, 120,1)
+}
+#join_view input[type=submit] {
+	background-color: rgba(25,25,25,1);
+}
+#to_host {
+	width: 100%;
+}
+
+input:focus {
+	outline: none;
+}
+#join_view #jleft {
+	box-sizing: border-box;
+	width: calc(50% - 1.5px);
+	float: left;
+	height: 100%;
+	padding: auto;
+}
+#join_view #jright {
+	box-sizing: border-box;
+	width: calc(50% - 1.5px);
+	float: right;
+	height: 100%;
+	padding: auto;
+}
+#jleft-inner {
+	width: 60%;
+	margin: auto;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+#jright-inner {
+	width: 60%;
+	margin: auto;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+#divider {
+	width: 3px;
+	height: 100%;
+	background-color: rgb(255, 180, 1);
+	float: left;
+	margin: auto;
+	border-radius: 2px;
+}
+#join_button {
+	width: 50%;
+}
+
+#search_view {
+}
+#generate_view {
+}

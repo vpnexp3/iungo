@@ -14,6 +14,8 @@ const TimSort = require('timsort');
 const app = express();
 
 app.use('/build', express.static('build'));
+app.use('/css', express.static('css'));
+app.use('/images', express.static('images'));
 app.get('/host', (req,res) => {
 	let path = 'https://api.rhapsody.com/oauth/authorize?' + querystring.stringify({
 		response_type: 'code',
