@@ -58,6 +58,10 @@ function genCode(ws) {
 		//console.log(codeCounter);
 		if (users[codeCounter] === undefined) {
 			users[codeCounter] = new Set([ws]);
+			users[codeCounter].currentSong = null;
+			users[codeCounter].nextSongEntries = new Map();
+			users[codeCounter].wsToSong = new Map();
+			
 			userToCode.set(ws, codeCounter);
 			break;
 		}
@@ -65,25 +69,27 @@ function genCode(ws) {
 	return codeCounter;
 }
 
-let currentSong = null;
-/**
- *
- * @type {Map<string, Set<WebSocket>>}
- */
-let nextSongEntries = new Map();
-
-/**
- *
- * @type {Map<WebSocket, string>}
- */
-let wsToSong = new Map();
+function sendTrendingUpdate(code) {
+	let obj = {type: MessageTypes.UPDATE_TRENDING};
+	obj.currentSong = users[code].currentSong;
+	obj.nextSongs = [];
+	for (let [songID, wsSet] of users[code].nextSongEntries) {
+		obj.nextSongs.push([songID, wsSet.size]);
+	}
+	
+	let stringified = JSON.stringify(obj);
+	for (let endpoint of users[code]) {
+		endpoint.send(stringified);
+	}
+}
 
 wss.on('connection', (ws, req) => {
 	ws.on('message', data => {
+		let code = userToCode.get(ws);
 		let obj = JSON.parse(data);
 		switch (obj.type) {
 			case MessageTypes.GENERATE_CODE:
-				let code = genCode(ws);
+				code = genCode(ws);
 				ws.send(JSON.stringify({type: MessageTypes.FOUND_CODE, code: code}));
 				break;
 			case MessageTypes.JOIN:
@@ -107,35 +113,37 @@ wss.on('connection', (ws, req) => {
 						res.on('end', () => {
 							let parsed = JSON.parse(rawData);
 							if (parsed.tracks.length >= 1) {
-								if (!nextSongEntries.has(obj.trackId)) {
-									nextSongEntries.set(obj.trackId, new Set());
+								if (!users[code].nextSongEntries.has(obj.trackId)) {
+									users[code].nextSongEntries.set(obj.trackId, new Set());
 								}
-								nextSongEntries.get(obj.trackId).add(ws);
+								users[code].nextSongEntries.get(obj.trackId).add(ws);
 								
-								if (wsToSong.has(ws)) { // delete previous
-									nextSongEntries.get(wsToSong.get(ws)).delete(ws);
+								if (users[code].wsToSong.has(ws)) { // delete previous
+									users[code].nextSongEntries.get(users[code].wsToSong.get(ws)).delete(ws);
 								}
-								wsToSong.set(ws, obj.trackId);
+								users[code].wsToSong.set(ws, obj.trackId);
 								//console.log(obj.trackId);
 								
 								//console.log('Queueing '+obj.trackId);
 								
-								if (currentSong === null) {
-									currentSong = obj.trackId;
+								if (users[code].currentSong === null) {
+									users[code].currentSong = {trackId: obj.trackId, trackName: parsed.tracks[0].name, trackArtist: parsed.tracks[0].artistName};
 									
-									for (let endpoint of (nextSongEntries.get(currentSong)||[])) {
-										wsToSong.delete(endpoint);
+									for (let endpoint of (users[code].nextSongEntries.get(users[code].currentSong.trackId)||[])) {
+										users[code].wsToSong.delete(endpoint);
 									}
-									nextSongEntries.delete(currentSong);
+									users[code].nextSongEntries.delete(users[code].currentSong.trackId);
 									// grab host
-									users[userToCode.get(ws)][Symbol.iterator]().next().value.send(
+									users[code][Symbol.iterator]().next().value.send(
 										JSON.stringify({
 											type: MessageTypes.NEXT_SONG,
-											trackId: currentSong,
-											trackName: parsed.tracks[0].name,
-											trackArtist: parsed.tracks[0].artistName
+											trackId: users[code].currentSong.trackId,
+											trackName: users[code].currentSong.trackName,
+											trackArtist: users[code].currentSong.trackArtist
 										}));
 								}
+								
+								sendTrendingUpdate(code);
 							}
 						});
 					}
@@ -144,20 +152,26 @@ wss.on('connection', (ws, req) => {
 			case MessageTypes.NEXT_SONG:
 				let curMax = 0;
 				let curMaxSong = null;
-				for (let songID of nextSongEntries.keys()) {
-					if (curMax < nextSongEntries.get(songID).size) {
-						curMax = nextSongEntries.get(songID).size;
-						curMaxSong = songID;
+				for (let song of users[code].nextSongEntries.keys()) {
+					if (curMax < users[code].nextSongEntries.get(song.trackId).size) {
+						curMax = users[code].nextSongEntries.get(song.trackId).size;
+						curMaxSong = song;
 					}
 				}
-				currentSong = curMaxSong;
-				if (currentSong) {
-					for (let endpoint of (nextSongEntries.get(currentSong)||[])) {
-						wsToSong.delete(endpoint);
+				users[code].currentSong = curMaxSong;
+				if (users[code].currentSong) {
+					for (let endpoint of (users[code].nextSongEntries.get(users[code].currentSong.trackId)||[])) {
+						users[code].wsToSong.delete(endpoint);
 					}
-					nextSongEntries.delete(currentSong);
+					users[code].nextSongEntries.delete(users[code].currentSong.trackId);
 				}
-				ws.send(JSON.stringify({type: MessageTypes.NEXT_SONG, trackId: currentSong}));
+				ws.send(JSON.stringify({
+					type: MessageTypes.NEXT_SONG,
+					trackId: users[code].currentSong.trackId,
+					trackName: users[code].currentSong.trackName,
+					trackArtist: users[code].currentSong.trackArtist
+				}));
+				sendTrendingUpdate(code);
 				break;
 		}
 	});

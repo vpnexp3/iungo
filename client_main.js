@@ -13,6 +13,9 @@ ViewManager.addView('join_view');
 ViewManager.addView('search_view');
 ViewManager.addView('generate_view');
 ViewManager.addView('code_view');
+ViewManager.addView('hub_view');
+
+ViewManager.linkViews('hub_vote', 'hub_view', 'search_view'); // TODO do not link if mobile
 
 ViewManager.setView(NapsterUtils.getParameters().accessToken ? 'generate_view' : 'join_view');
 
@@ -35,6 +38,10 @@ joinCode.addEventListener("keypress", (e) => {
 		}
 	}
 });
+
+let nowPlayingClient = document.getElementById('now_playing_client_cont');
+let currentTrackClient = document.getElementById('current_track_client');
+let currentArtistClient = document.getElementById('current_artist_client');
 
 ws.addEventListener('message', event => {
 	let obj = JSON.parse(event.data);
@@ -62,6 +69,16 @@ ws.addEventListener('message', event => {
 				});
 			} else {
 				currentSong = null;
+			}
+			break;
+		case MessageTypes.UPDATE_TRENDING:
+			console.log(obj);
+			if (obj.currentSong) {
+				nowPlayingClient.style.display = '';
+				currentTrackClient.textContent = obj.currentSong.trackName;
+				currentArtistClient.textContent = obj.currentSong.trackArtist;
+			} else {
+				nowPlayingClient.style.display = 'none';
 			}
 			break;
 	}
