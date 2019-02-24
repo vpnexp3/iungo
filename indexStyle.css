@@ -3,16 +3,50 @@ body {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	height: 100%;
+	margin: 0px;
+	color: rgba(255,180,1,1);
+	font-family: 'Fredoka One';
+	width: 100%;
+	height: 100vh;
+	padding: none;
+	background: rgba(40, 40, 40, 1);
 }
 
+#header_img {
+	max-height: 250px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: -12%;
+	height: auto;
+	width: 35%;
+	padding: none;
+	margin-bottom: 40px;
+}
 
-body input{
+img{
+	display: flex;
+	width: 100%;
+	height: auto;
+	margin: none;
+	padding: none;
+	max-height: 250px;
+}
+
+#join_view {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: none;
+	margin-bottom: none;
+	width: 100%;
+	height: 40%;
+	padding: 5px;
+}
+#join_view input{
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: none;
 	margin-bottom: 7px;
-	padding: none;
+	padding: 0px;
 	display: block;
 	border-radius: 10px;
 	border-style: solid;
@@ -24,61 +58,66 @@ body input{
 	text-align: center;
 	font-family: 'Fredoka One', sans-serif;
 }
-body input::placeholder {
+#join_view input::placeholder {
 	color: rgba(60, 60, 60, 1)
 }
-body input[type=submit]:hover {
+#join_view input[type=submit]:hover {
 	background-color: rgba(17,17,17,1);
 }
-body input[type=text] {
-	width: 30%;
+#join_view input[type=text] {
+	width: 100%;
 	background-color: rgba(120, 120, 120,1)
 }
-body input[type=submit] {
-	width: 10%;
+#join_view input[type=submit] {
 	background-color: rgba(25,25,25,1);
 }
-
-main-container * {
-	margin: 5px;
-}
-body {
-	margin: 5px;
-	color: rgba(255,180,1,1);
-	font-family: 'Fredoka One';
+#to_host {
 	width: 100%;
-	padding: none;
-	background: rgba(40, 40, 40, 1);
-}
-#join_view {
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: none;
-	margin-bottom: none;
-	width: 100%;
-	padding: 5px;
 }
 
-img{
-	display: flex;
-	width: 100%;
-	height: auto;
-	margin: none;
-	padding: none;
-	max-height: 250px;
-}
-#header_img {
-	max-height: 250px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: none;
-	width: 40%;
-	padding: none;
-	margin-bottom: 25px;
-}
 input:focus {
 	outline: none;
 }
+#join_view #jleft {
+	box-sizing: border-box;
+	width: calc(50% - 1.5px);
+	float: left;
+	height: 100%;
+	padding: auto;
+}
+#join_view #jright {
+	box-sizing: border-box;
+	width: calc(50% - 1.5px);
+	float: right;
+	height: 100%;
+	padding: auto;
+}
+#jleft-inner {
+	width: 60%;
+	margin: auto;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+#jright-inner {
+	width: 60%;
+	margin: auto;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+#divider {
+	width: 3px;
+	height: 100%;
+	background-color: rgb(255, 180, 1);
+	float: center;
+	margin: auto;
+	border-radius: 2px;
+}
+#join_button {
+	width: 50%;
+}
+
 #search_view {
 	display: none;
 }
