@@ -1,8 +1,4 @@
 .main-container{
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 	display: flex;
 	flex-direction: column;
@@ -31,7 +27,6 @@
 .main-container input::placeholder {
 	color: rgba(60, 60, 60, 1)
 }
-<<<<<<< HEAD
 .main-container input[type=submit]:hover {
 	background-color: rgba(17,17,17,1);
 }
@@ -85,98 +80,3 @@ img{
 	padding: none;
 }
 input:focus {outline: none; }
-=======
-  min-height: 100vh;
-  background: rgba(40, 40, 40, 1);
-=======
-	min-height: 100vh;
-=======
->>>>>>> Here take this
-	background: rgba(40, 40, 40, 1);
->>>>>>> Fix tab characters
-=======
-
->>>>>>> Fix
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	height: 100%;
-}
-
-
-.main-container input{
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: none;
-	margin-bottom: 20px;
-	padding: none;
-	display: block;
-	border-radius: 10px;
-	border-style: solid;
-	border-color: rgba(255,180,1,1);
-	height: 50px;
-	font-size: 20px;
-	color: rgba(255,180,1,1);
-	box-shadow: none;
-	text-align: center;
-	font-family: 'Fredoka One', sans-serif;
-}
-=======
->>>>>>> Fix 2
-.main-container input[type=submit]:hover {
-	background-color: rgba(17,17,17,1);
-}
-.main-container input[type=text] {
-	width: 60%;
-	background-color: rgba(100, 100, 100,1)
-}
-.main-container input[type=submit] {
-	width: 55%;
-	background-color: rgba(25,25,25,1);
-}
-
-.main-container * {
-	margin: 5px;
-}
-body {
-	margin: 0;
-	color: rgba(255,180,1,1);
-	font-family: 'Fredoka One';
-	width: 100%;
-	padding: none;
-	background: rgba(40, 40, 40, 1);
-}
-main {
-	width: 100%;
-	padding: none;
-	margin: none;
-}
-#join_view {
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: none;
-	margin-bottom: none;
-	width: 100%;
-	padding: 5px;
-}
-<<<<<<< HEAD
->>>>>>> lol
-=======
-
-img{
-	display: flex;
-	width: 100%;
-	height: auto;
-	margin: none;
-	padding: none;
-}
-#header_img {
-	max-height: 250px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: none;
-	width: 40%;
-	padding: none;
-}
-input:focus {outline: none; }
->>>>>>> hhgv

@@ -46,8 +46,6 @@ app.get('/authorize', (clientRequest, clientResponse) => {
 app.get('/', (req, res) => {
 	res.sendFile(__dirname+'/index.html');
 });
-<<<<<<< HEAD
-=======
 app.get('/host_app', (req,res) => {
 	res.sendFile(__dirname+'/host.html');
 });
@@ -55,10 +53,6 @@ app.get('/indexStyle.css', (req, res) => {
 	res.sendFile(__dirname+'/indexStyle.css');
 })
 app.use('/images', express.static('images'));
-<<<<<<< HEAD
->>>>>>> Add content files
-=======
->>>>>>> Add content files
 
 let codeCounter = 0;
 const users = new Array(100000);
@@ -131,21 +125,37 @@ wss.on('connection', (ws, req) => {
 								if (!users[code].nextSongEntries.has(obj.trackId)) {
 									users[code].nextSongEntries.set(obj.trackId, new Set());
 								}
+<<<<<<< HEAD
 								users[code].nextSongEntries.get(obj.trackId).add(ws);
 								
 								if (users[code].wsToSong.has(ws)) { // delete previous
 									users[code].nextSongEntries.get(users[code].wsToSong.get(ws)).delete(ws);
+=======
+								nextSongEntries.get(obj.trackId).add(ws);
+
+								if (wsToSong.has(ws)) { // delete previous
+									nextSongEntries.get(wsToSong.get(ws)).delete(ws);
+>>>>>>> Merge header removal
 								}
 								users[code].wsToSong.set(ws, obj.trackId);
 								//console.log(obj.trackId);
-								
+
 								//console.log('Queueing '+obj.trackId);
+<<<<<<< HEAD
 								
 								if (users[code].currentSong === null) {
 									users[code].currentSong = {trackId: obj.trackId, trackName: parsed.tracks[0].name, trackArtist: parsed.tracks[0].artistName};
 									
 									for (let endpoint of (users[code].nextSongEntries.get(users[code].currentSong.trackId)||[])) {
 										users[code].wsToSong.delete(endpoint);
+=======
+
+								if (currentSong === null) {
+									currentSong = obj.trackId;
+
+									for (let endpoint of (nextSongEntries.get(currentSong)||[])) {
+										wsToSong.delete(endpoint);
+>>>>>>> Merge header removal
 									}
 									users[code].nextSongEntries.delete(users[code].currentSong.trackId);
 									// grab host
