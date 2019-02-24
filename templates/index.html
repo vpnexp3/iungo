@@ -4,7 +4,7 @@
 		<meta charset="UTF-8"/>
 		<title>iunGO</title>
 		<link rel="stylesheet" href="/css/main.css" type="text/css" />
-		{{ isMobile ? '<link rel="stylesheet" href="/css/mobile.css" type="text/css" />' : '' }}
+		{{#isMobile}}<link rel="stylesheet" href="/css/mobile.css" type="text/css" />{{/isMobile}}
 	</head>
 	<body>
 		<div id="header_img"><img src='/images/iungo_orange.svg' /></div>
@@ -27,12 +27,12 @@
 			<div id="now_playing_client_cont" style="display: none;">
 				Now playing: <span id="current_track_client"></span> by <span id="current_artist_client"></span>
 			</div>
-			{{ isMobile ? '<input type="submit" name="to_search" id="to_search" value="Search songs" />' : '' }}
+			{{#isMobile}}<input type="submit" name="to_search" id="to_search" value="Search songs" />{{/isMobile}}
 			<div class="trending">
 			</div>
 		</div>
 		<div id="search_view" style="display:none;">
-			{{ isMobile ? '<input type="submit" name="to_hub" id="to_hub" value="Search songs" />' : '' }}
+			{{#isMobile}}<input type="submit" name="to_hub" id="to_hub" value="Search songs" />{{/isMobile}}
 			<input type="text" id="search" name="search" placeholder="Search" />
 			<div id="search_results">
 			</div>
