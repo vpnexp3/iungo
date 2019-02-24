@@ -29,7 +29,7 @@ app.get('/host', (req,res) => {
 	let path = 'https://api.rhapsody.com/oauth/authorize?' + querystring.stringify({
 		response_type: 'code',
 		client_id: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw',
-		redirect_uri: req.protocol+'://'+req.hostname + ':' + port + '/authorize'
+		redirect_uri: req.protocol+'://'+req.hostname + '/authorize'
 	});
 	res.redirect(path);
 });
@@ -42,13 +42,13 @@ app.get('/authorize', (clientRequest, clientResponse) => {
 			client_secret: process.env.RHAPSODY_SECRET,
 			response_type: 'code',
 			code: clientRequest.query.code,
-			redirect_uri: clientRequest.protocol+'://'+clientRequest.hostname + ':' + port + '/authorize',
+			redirect_uri: clientRequest.protocol+'://'+clientRequest.hostname + '/authorize',
 			grant_type: 'authorization_code'
 		}
 	}, (error, response, body) => {
 		//console.log(body);
 		body = JSON.parse(body);
-		clientResponse.redirect(clientRequest.protocol+'://'+clientRequest.hostname + ':' + port + '?' + querystring.stringify({
+		clientResponse.redirect(clientRequest.protocol+'://'+clientRequest.hostname + '?' + querystring.stringify({
 			accessToken: body.access_token,
 			refreshToken: body.refresh_token
 		}));
