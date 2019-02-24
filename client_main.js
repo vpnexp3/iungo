@@ -58,12 +58,7 @@ ws.addEventListener('message', event => {
 				napsterPromise.then(() => {
 					Napster.player.play(obj.trackId);
 					currentSong = obj.trackId;
-					window.addEventListener('message', event => {
-						if (event.data.data.code === 'PlayComplete' && currentSong !== null) {
-							currentSong = null;
-							ws.send(JSON.stringify({type: MessageTypes.NEXT_SONG}));
-						}
-					});
+					currentSongData = {trackArtist: obj.trackArtist, trackName: obj.trackName}
 				});
 			} else {
 				currentSong = null;
@@ -139,4 +134,34 @@ generateCodeBtn.addEventListener('click', () => {
 
 let codeDisps = document.getElementsByClassName('code_display');
 
+let nowPlayingCont = document.getElementById('now_playing_cont');
+let currentTrack = document.getElementById('current_track');
+let currentArtist = document.getElementById('current_artist');
+let elapsedTime = document.getElementById('elapsed_time');
+
 let currentSong = null;
+let currentSongData = null;
+
+window.addEventListener('message', event => {
+	if (event.data && event.data.data && event.data.data.code === 'PlayComplete' && currentSong !== null) {
+		currentSong = null;
+		currentSongData = null;
+		nowPlayingCont.style.display = 'none';
+		ws.send(JSON.stringify({type: MessageTypes.NEXT_SONG}));
+	}
+	//console.log(event);
+	if (event.data && event.data.type === 'playtimer') {
+		let time = event.data.data.currentTime;
+		nowPlayingCont.style.display = '';
+		currentTrack.textContent = currentSongData.trackName;
+		currentArtist.textContent = currentSongData.trackArtist;
+		
+		let mins = Math.floor(time / 60);
+		let secs = Math.floor(time % 60).toString();
+		while (secs.length < 2) {
+			secs = '0'+secs;
+		}
+		
+		elapsedTime.textContent = mins + ':' + secs;
+	}
+});

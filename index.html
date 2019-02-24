@@ -6,7 +6,7 @@
 	</head>
 	<body>
 		<div id="join_view">
-			<button id="to_host">Hosting?</button>
+			<button id="to_host">Hosting?</button><br />
 			<label for="join_code">Enter Join Code</label><input type="text" id="join_code" name="join_code" /><br />
 			<span class="error_msg" id="error_join"></span>
 		</div>
@@ -16,10 +16,13 @@
 			</div>
 		</div>
 		<div id="generate_view">
-			<button id="to_join">Joining a host?</button>
+			<button id="to_join">Joining a host?</button><br />
 			<button id="generate_code">Generate code</button>
 		</div>
 		<div id="code_view">
+			<div id="now_playing_cont" style="display:none;">
+				Now playing: <span id="current_track"></span> by <span id="current_artist"></span> (<span id="elapsed_time"></span>)
+			</div>
 			<div>Your code is <span class="code_display"></span></div>
 			<div id="playing_queue">
 			</div>

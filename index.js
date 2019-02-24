@@ -128,7 +128,13 @@ wss.on('connection', (ws, req) => {
 									}
 									nextSongEntries.delete(currentSong);
 									// grab host
-									users[userToCode.get(ws)][Symbol.iterator]().next().value.send(JSON.stringify({type: MessageTypes.NEXT_SONG, trackId: currentSong}));
+									users[userToCode.get(ws)][Symbol.iterator]().next().value.send(
+										JSON.stringify({
+											type: MessageTypes.NEXT_SONG,
+											trackId: currentSong,
+											trackName: parsed.tracks[0].name,
+											trackArtist: parsed.tracks[0].artistName
+										}));
 								}
 							}
 						});
