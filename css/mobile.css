@@ -113,14 +113,18 @@ input:focus {
 	width: 50%;
 }
 #hub_view, #search_view {
-	width: 50%;
-	float: right;
-	height: 80%;
+	width: 75%;
+	float: none !important;
+	height: 90%;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 #hub_view-inner, #search_view-inner {
 	width: 80%;
 	height: 80vh;
-	margin: 10%;
+	margin: auto;
 	border: 3px solid rgb(255, 180, 1);
 	border-radius: 30px;
 	background-color: rgb(25, 25, 25);
@@ -131,6 +135,43 @@ input:focus {
 	height: 50px;
 	border-radius: 27px 27px 0 0;
 	box-shadow: none;
+	text-align: center;
+}
+#to_search {
+	padding: 0px;
+	display: block;
+	border-radius: 10px;
+	border-style: solid;
+	border-color: rgba(255,180,1,1);
+	height: 50px;
+	width: 100%;
+	font-size: 20px;
+	color: rgba(255,180,1,1);
+	box-shadow: none;
+	text-align: center;
+	font-family: 'Fredoka One', sans-serif;
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+}
+#to_hub{
+	padding: 0px;
+	display: block;
+	border-radius: 10px;
+	border-style: solid;
+	border-color: rgba(255,180,1,1);
+	height: 50px;
+	width: 100%;
+	font-size: 20px;
+	color: rgba(255,180,1,1);
+	box-shadow: none;
+	text-align: center;
+	font-family: 'Fredoka One', sans-serif;
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+}
+#search_results{
 	text-align: center;
 }
 #generate_view {
