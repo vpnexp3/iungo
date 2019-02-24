@@ -27,10 +27,12 @@
 			<div id="now_playing_client_cont" style="display: none;">
 				Now playing: <span id="current_track_client"></span> by <span id="current_artist_client"></span>
 			</div>
+			{{ isMobile ? '<input type="submit" name="to_search" id="to_search" value="Search songs" />' : '' }}
 			<div class="trending">
 			</div>
 		</div>
 		<div id="search_view" style="display:none;">
+			{{ isMobile ? '<input type="submit" name="to_hub" id="to_hub" value="Search songs" />' : '' }}
 			<input type="text" id="search" name="search" placeholder="Search" />
 			<div id="search_results">
 			</div>
@@ -45,8 +47,6 @@
 				<input type="submit" name="play_pause" id="play_pause" value="Pause" />
 			</div>
 			<div id="code_display">Enter this code to join:<br /><span class="code_display"></span></div>
-			<div id="playing_queue">
-			</div>
 			<div class="trending" id="trending_host">
 			</div>
 		</div>
