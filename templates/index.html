@@ -3,10 +3,11 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<title>iunGO</title>
-		<link rel="stylesheet" href="css/main.css" type="text/css" />
+		<link rel="stylesheet" href="/css/main.css" type="text/css" />
+		{{ isMobile ? '<link rel="stylesheet" href="/css/mobile.css" type="text/css" />' : '' }}
 	</head>
 	<body>
-		<div id="header_img"><img src='images/iungo_orange.png' /></div>
+		<div id="header_img"><img src='/images/iungo_orange.svg' /></div>
 		<div id="join_view">
 			<div id="jleft">
 				<div id="jleft-inner">
@@ -35,22 +36,25 @@
 			</div>
 		</div>
 		<div id="generate_view" style="display:none;">
-			<button id="to_join">Joining a host?</button><br />
-			<button id="generate_code">Generate code</button>
+			<input type="submit" name="generate_code" id="generate_code" value="Create A New Session" /><br />
+			<input type="submit" name="to_join" id="to_join" value="Join a Session" />
 		</div>
 		<div id="code_view" style="display:none;">
 			<div id="now_playing_cont" style="display:none;">
 				Now playing: <span id="current_track"></span> by <span id="current_artist"></span> (<span id="elapsed_time"></span>)
 			</div>
-			<div>Your code is <span class="code_display"></span></div>
+			<div id="code_display">Enter this code to join:<br /><span class="code_display"></span></div>
 			<div id="playing_queue">
 			</div>
 			<div class="trending" id="trending_host">
 			</div>
 		</div>
-		
-		<script src="build/jquery-1.12.4.min.js"></script>
-		<script src="build/napster.min.js"></script>
-		<script src="build/output.js"></script>
+
+		<script>
+			let isMobile = {{isMobile}};
+		</script>
+		<script src="/build/jquery-1.12.4.min.js"></script>
+		<script src="/build/napster.min.js"></script>
+		<script src="/build/output.js"></script>
 	</body>
 </html>

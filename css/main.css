@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Fredoka+One');
 
 body {
-	
+	/*
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: center;*/
 	margin: 0;
 	color: rgba(255,180,1,1);
 	font-family: 'Fredoka One', sans-serif;
@@ -12,17 +12,13 @@ body {
 	height: 100vh;
 	padding: 0;
 	background: rgba(40, 40, 40, 1);
+	font-size: 1.4em;
 }
 
 #header_img {
-	max-height: 250px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: -12%;
-	height: auto;
-	width: 35%;
-	padding: 0;
-	margin-bottom: 40px;
+	width: 25%;
+	padding: 5% 0;
+	margin: 0 auto 0;
 }
 
 img{
@@ -35,43 +31,39 @@ img{
 }
 
 #join_view {
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: none;
-	margin-bottom: none;
+	margin: 0 auto;
 	width: 100%;
 	height: 40%;
 	padding: 5px;
 }
-#join_view input{
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: none;
-	margin-bottom: 7px;
-	padding: 0px;
+input {
+	margin: 0 auto 7px;
+	padding: 7px;
 	display: block;
 	border-radius: 10px;
-	border-style: solid;
-	border-color: rgba(255,180,1,1);
-	height: 50px;
-	font-size: 20px;
+	border: solid rgba(255, 180, 1, 1);
+	font-size: 1em;
 	color: rgba(255,180,1,1);
 	box-shadow: none;
 	text-align: center;
 	font-family: 'Fredoka One', sans-serif;
 }
-#join_view input::placeholder {
+input[type=text]::placeholder {
 	color: rgba(60, 60, 60, 1)
 }
-#join_view input[type=submit]:hover {
-	background-color: rgba(17,17,17,1);
-}
-#join_view input[type=text] {
+input[type=text] {
 	width: 100%;
 	background-color: rgba(120, 120, 120,1)
 }
-#join_view input[type=submit] {
+input[type=submit]:hover {
+	background-color: rgba(17,17,17,1);
+}
+input[type=submit] {
 	background-color: rgba(25,25,25,1);
+	cursor: pointer;
+}
+#generate_view input[type=submit] {
+	min-width: 25ch;
 }
 #to_host {
 	width: 100%;
@@ -120,7 +112,20 @@ input:focus {
 	width: 50%;
 }
 
-#search_view {
+#code_display {
+	font-size: 2em;
+	text-align: center;
 }
-#generate_view {
+#code_display > .code_display {
+	font-size: 3em;
+}
+
+#search_view, #hub_view {
+	width: 50%;
+	min-height: 1px;
+	float: left;
+}
+
+#search {
+	width: 75%;
 }
