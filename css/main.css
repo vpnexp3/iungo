@@ -122,10 +122,15 @@ input:focus {
 
 #search_view, #hub_view {
 	width: 50%;
-	min-height: 1px;
+	height: 40%;
 	float: left;
+	padding: 0 2em;
+	box-sizing: border-box;
+}
+#search_view {
+	border-left: 3px white solid;
 }
 
 #search {
-	width: 75%;
+	/*width: 100%;*/
 }
