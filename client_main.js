@@ -267,6 +267,8 @@ playPause.addEventListener('click', () => {
 	}
 });
 
-let toSearch = document.getElementById('to_search'), toHub = document.getElementById('to_hub');
-toSearch.addEventListener('click', () => ViewManager.setView('search_view'));
-toHub.addEventListener('click', () => ViewManager.setView('hub_view'));
+if (isMobile) {
+	let toSearch = document.getElementById('to_search'), toHub = document.getElementById('to_hub');
+	toSearch.addEventListener('click', () => ViewManager.setView('search_view'));
+	toHub.addEventListener('click', () => ViewManager.setView('hub_view'));
+}
