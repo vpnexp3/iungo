@@ -119,14 +119,21 @@ input:focus {
 	border: 3px solid rgb(255, 180, 1);
 	border-radius: 30px;
 	background-color: rgb(25, 25, 25);
+	overflow-x: hidden;
 }
 #search {
-	width: calc(100% - 3px);
+	width: 100%;
 	background-color: rgb(120, 120, 120);
 	height: 50px;
-	border-radius: 27px 27px 0 0;
 	box-shadow: none;
 	text-align: center;
+	border: none;
+	color: rgb(255, 180, 1);
+	font-size: 20px;
+	font-family: 'Fredoka One', sans-serif;
+}
+#search::placeholder {
+	color: rgb(60, 60, 60)
 }
 #generate_view {
 }

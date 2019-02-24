@@ -16,12 +16,12 @@
 					<input type="submit" id="join_button" value="Join" />
 				</div>
 			</div>
+			<div id="divider"></div>
 			<div id="jright">
 				<div id="jright-inner">
 					<input type="submit" name="to_host" id="to_host" value="Host a Session" />
 				</div>
 			</div>
-			<div id="divider"></div>
 			<span class="error_msg" id="error_join"></span>
 		</div>
 		<div id="hub_view" style="display:none;">
@@ -36,13 +36,11 @@
 		</div>
 
 		<div id="search_view" style="display:none;">
-			<input type="text" id="search" name="search" placeholder="Search" />
-			<div id="search_results">
-				<div id="search_view-inner">
-					{{#isMobile}}<input type="submit" name="to_hub" id="to_hub" value="Search songs" />{{/isMobile}}
-					<input type="text" id="search" name="search" placeholder="Search" />
+			<div id="search_view-inner">
+				<input type="text" id="search" name="search" placeholder="Search" />
 				<div id="search_results">
 				</div>
+				{{#isMobile}}<input type="submit" name="to_hub" id="to_hub" value="Search songs" />{{/isMobile}}
 			</div>
 		</div>
 
