@@ -107,11 +107,26 @@ input:focus {
 #join_button {
 	width: 50%;
 }
-#hub_view {
+#hub_view, #search_view {
 	width: 50%;
 	float: right;
+	height: 80%;
 }
-#search_view {
+#hub_view-inner, #search_view-inner {
+	width: 80%;
+	height: 80vh;
+	margin: 10%;
+	border: 3px solid rgb(255, 180, 1);
+	border-radius: 30px;
+	background-color: rgb(25, 25, 25);
+}
+#search {
+	width: calc(100% - 3px);
+	background-color: rgb(120, 120, 120);
+	height: 50px;
+	border-radius: 27px 27px 0 0;
+	box-shadow: none;
+	text-align: center;
 }
 #generate_view {
 }

@@ -7,8 +7,9 @@
 		{{#isMobile}}<link rel="stylesheet" href="/css/mobile.css" type="text/css" />{{/isMobile}}
 	</head>
 	<body>
-		<div id="header_img"><img src='/images/iungo_orange.svg' /></div>
+
 		<div id="join_view">
+			<div id="header_img"><img src='/images/iungo_orange.svg' /></div>
 			<div id="jleft">
 				<div id="jleft-inner">
 					<input type="text" id="join_code" name="join_code" placeholder="Enter Session Code" /><br />
@@ -24,19 +25,28 @@
 			<span class="error_msg" id="error_join"></span>
 		</div>
 		<div id="hub_view" style="display:none;">
-			<div id="now_playing_client_cont" style="display: none;">
-				Now playing: <span id="current_track_client"></span> by <span id="current_artist_client"></span>
-			</div>
-			{{#isMobile}}<input type="submit" name="to_search" id="to_search" value="Search songs" />{{/isMobile}}
-			<div class="trending">
+			<div id="hub_view-inner">
+				<div id="now_playing_client_cont" style="display: none;">
+					Now playing: <span id="current_track_client"></span> by <span id="current_artist_client"></span>
+				</div>
+				{{#isMobile}}<input type="submit" name="to_search" id="to_search" value="Search songs" />{{/isMobile}}
+				<div class="trending">
+				</div>
 			</div>
 		</div>
+
 		<div id="search_view" style="display:none;">
 			{{#isMobile}}<input type="submit" name="to_hub" id="to_hub" value="Search songs" />{{/isMobile}}
 			<input type="text" id="search" name="search" placeholder="Search" />
 			<div id="search_results">
+				<div id="search_view-inner">
+					{{ isMobile ? '<input type="submit" name="to_hub" id="to_hub" value="Search songs" />' : '' }}
+					<input type="text" id="search" name="search" placeholder="Search" />
+				<div id="search_results">
+				</div>
 			</div>
 		</div>
+
 		<div id="generate_view" style="display:none;">
 			<input type="submit" name="generate_code" id="generate_code" value="Create A New Session" /><br />
 			<input type="submit" name="to_join" id="to_join" value="Join a Session" />
