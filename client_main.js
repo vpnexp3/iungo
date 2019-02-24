@@ -43,7 +43,7 @@ let nowPlayingClient = document.getElementById('now_playing_client_cont');
 let currentTrackClient = document.getElementById('current_track_client');
 let currentArtistClient = document.getElementById('current_artist_client');
 let trending = document.getElementsByClassName('trending');
-console.log(trending);
+//console.log(trending);
 
 ws.addEventListener('message', event => {
 	let obj = JSON.parse(event.data);
