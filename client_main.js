@@ -55,6 +55,7 @@ let trending = document.getElementsByClassName('trending');
 ws.addEventListener('message', event => {
 	let obj = JSON.parse(event.data);
 	//console.log('Teehee!');
+	console.log(obj);
 	switch (obj.type) {
 		case MessageTypes.CONFIRM_JOIN:
 			ViewManager.setView('hub_view');
