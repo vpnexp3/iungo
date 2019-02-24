@@ -27,23 +27,30 @@ const ws = new WebSocket(getWS('/'));
 let joinCode = document.getElementById("join_code");
 let errorJoin = document.getElementById("error_join");
 
+function sendCode() {
+	let parsedCode = parseInt(joinCode.value, 10);
+	if (!isNaN(parsedCode)) {
+		ws.send(JSON.stringify({type: MessageTypes.JOIN, code: parsedCode}));
+	} else {
+		errorJoin.textContent = 'Invalid code';
+	}
+}
+
 joinCode.addEventListener("keypress", (e) => {
 	if (e.keyCode === 13 /* enter */) {
 		e.preventDefault();
-		let parsedCode = parseInt(joinCode.value, 10);
-		if (!isNaN(parsedCode)) {
-			ws.send(JSON.stringify({type: MessageTypes.JOIN, code: parsedCode}));
-		} else {
-			errorJoin.textContent = 'Invalid code';
-		}
+		sendCode();
 	}
 });
+
+let joinButton = document.getElementById('join_button');
+joinButton.addEventListener('click', e => sendCode());
 
 let nowPlayingClient = document.getElementById('now_playing_client_cont');
 let currentTrackClient = document.getElementById('current_track_client');
 let currentArtistClient = document.getElementById('current_artist_client');
 let trending = document.getElementsByClassName('trending');
-console.log(trending);
+//console.log(trending);
 
 ws.addEventListener('message', event => {
 	let obj = JSON.parse(event.data);

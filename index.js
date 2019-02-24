@@ -14,6 +14,8 @@ const TimSort = require('timsort');
 const app = express();
 
 app.use('/build', express.static('build'));
+app.use('/css', express.static('css'));
+app.use('/images', express.static('images'));
 app.get('/host', (req,res) => {
 	let path = 'https://api.rhapsody.com/oauth/authorize?' + querystring.stringify({
 		response_type: 'code',
@@ -46,13 +48,6 @@ app.get('/authorize', (clientRequest, clientResponse) => {
 app.get('/', (req, res) => {
 	res.sendFile(__dirname+'/index.html');
 });
-app.get('/host_app', (req,res) => {
-	res.sendFile(__dirname+'/host.html');
-});
-app.get('/indexStyle.css', (req, res) => {
-	res.sendFile(__dirname+'/indexStyle.css');
-})
-app.use('/images', express.static('images'));
 
 let codeCounter = 0;
 const users = new Array(100000);
@@ -69,7 +64,7 @@ function genCode(ws) {
 			users[codeCounter].currentSong = null;
 			users[codeCounter].nextSongEntries = new Map();
 			users[codeCounter].wsToSong = new Map();
-
+			
 			userToCode.set(ws, codeCounter);
 			break;
 		}
@@ -85,7 +80,7 @@ function sendTrendingUpdate(code) {
 		obj.nextSongs.push([songID, wsSet.size]);
 	}
 	TimSort.sort(obj.nextSongs, (A,B) => B[1] - A[1]);
-
+	
 	let stringified = JSON.stringify(obj);
 	for (let endpoint of users[code]) {
 		endpoint.send(stringified);
@@ -126,18 +121,18 @@ wss.on('connection', (ws, req) => {
 									users[code].nextSongEntries.set(obj.trackId, new Set());
 								}
 								users[code].nextSongEntries.get(obj.trackId).add(ws);
-
+								
 								if (users[code].wsToSong.has(ws)) { // delete previous
 									users[code].nextSongEntries.get(users[code].wsToSong.get(ws)).delete(ws);
 								}
 								users[code].wsToSong.set(ws, obj.trackId);
 								//console.log(obj.trackId);
-
+								
 								//console.log('Queueing '+obj.trackId);
-
+								
 								if (users[code].currentSong === null) {
 									users[code].currentSong = {trackId: obj.trackId, trackName: parsed.tracks[0].name, trackArtist: parsed.tracks[0].artistName};
-
+									
 									for (let endpoint of (users[code].nextSongEntries.get(users[code].currentSong.trackId)||[])) {
 										users[code].wsToSong.delete(endpoint);
 									}
@@ -151,7 +146,7 @@ wss.on('connection', (ws, req) => {
 											trackArtist: users[code].currentSong.trackArtist
 										}));
 								}
-
+								
 								sendTrendingUpdate(code);
 							}
 						});
@@ -198,3 +193,4 @@ wss.on('connection', (ws, req) => {
 		}
 	});
 });
+

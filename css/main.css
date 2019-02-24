@@ -1,14 +1,16 @@
-body {
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One');
 
+body {
+	
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	margin: 0px;
+	margin: 0;
 	color: rgba(255,180,1,1);
-	font-family: 'Fredoka One';
+	font-family: 'Fredoka One', sans-serif;
 	width: 100%;
 	height: 100vh;
-	padding: none;
+	padding: 0;
 	background: rgba(40, 40, 40, 1);
 }
 
@@ -19,7 +21,7 @@ body {
 	margin-top: -12%;
 	height: auto;
 	width: 35%;
-	padding: none;
+	padding: 0;
 	margin-bottom: 40px;
 }
 
@@ -27,8 +29,8 @@ img{
 	display: flex;
 	width: 100%;
 	height: auto;
-	margin: none;
-	padding: none;
+	margin: 0;
+	padding: 0;
 	max-height: 250px;
 }
 
@@ -110,7 +112,7 @@ input:focus {
 	width: 3px;
 	height: 100%;
 	background-color: rgb(255, 180, 1);
-	float: center;
+	float: left;
 	margin: auto;
 	border-radius: 2px;
 }
