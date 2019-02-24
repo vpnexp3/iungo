@@ -101,6 +101,21 @@ function sendTrendingUpdate(code, endPointList) {
 }
 
 wss.on('connection', (ws, req) => {
+	ws.isAlive = true;
+	
+	ws.on('pong', () => ws.isAlive = true);
+	
+	ws.on('error', (e) => {});
+	
+	let pongInterval = setInterval(() => {
+		wss.clients.forEach(ws => {
+			if (ws.isAlive === false) return ws.terminate();
+			
+			ws.isAlive = false;
+			ws.ping('', false, true);
+		});
+	}, 30000);
+	
 	ws.on('message', data => {
 		let code = userToCode.get(ws);
 		let obj = JSON.parse(data);
