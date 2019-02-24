@@ -42,13 +42,15 @@ joinCode.addEventListener("keypress", (e) => {
 let nowPlayingClient = document.getElementById('now_playing_client_cont');
 let currentTrackClient = document.getElementById('current_track_client');
 let currentArtistClient = document.getElementById('current_artist_client');
+let trending = document.getElementsByClassName('trending');
+console.log(trending);
 
 ws.addEventListener('message', event => {
 	let obj = JSON.parse(event.data);
 	//console.log('Teehee!');
 	switch (obj.type) {
 		case MessageTypes.CONFIRM_JOIN:
-			ViewManager.setView('search_view');
+			ViewManager.setView('hub_view');
 			break;
 		case MessageTypes.DENY_JOIN:
 			errorJoin.textContent = obj.message;
@@ -72,7 +74,7 @@ ws.addEventListener('message', event => {
 			}
 			break;
 		case MessageTypes.UPDATE_TRENDING:
-			console.log(obj);
+			//console.log(obj);
 			if (obj.currentSong) {
 				nowPlayingClient.style.display = '';
 				currentTrackClient.textContent = obj.currentSong.trackName;
@@ -80,6 +82,63 @@ ws.addEventListener('message', event => {
 			} else {
 				nowPlayingClient.style.display = 'none';
 			}
+			let infoPromises = [];
+			for (let [songID, sz] of obj.nextSongs) {
+				let deferred = new ManualResolvePromise();
+				infoPromises.push(deferred);
+				Napster.api.get(true, '/tracks/'+encodeURIComponent(songID), (data) => {
+					if (data.tracks && data.tracks.length >= 1) {
+						deferred.resolve({trackId: songID, trackName: data.tracks[0].name, trackArtist: data.tracks[0].artistName, sz: sz});
+					} else {
+						deferred.reject();
+					}
+				});
+			}
+			Promise.all(infoPromises).then(data => {
+				//console.log(data);
+				for (let trendingEntry of trending) {
+					trendingEntry.innerHTML = '';
+					for (let entry of data) {
+						if (entry.sz <= 0) continue;
+						
+						let trackCont = document.createElement('div');
+						trackCont.classList.add('track_container');
+						trackCont.dataset.trackId = entry.trackId;
+						
+						let trackNameSpan = document.createElement('span');
+						trackNameSpan.classList.add('track_name');
+						trackNameSpan.textContent = entry.trackName;
+						trackCont.appendChild(trackNameSpan);
+						
+						trackCont.appendChild(document.createTextNode(' by '));
+						
+						let artistNameSpan = document.createElement('span');
+						artistNameSpan.classList.add('artist_name');
+						artistNameSpan.textContent = entry.trackArtist;
+						trackCont.appendChild(artistNameSpan);
+						
+						trackCont.appendChild(document.createTextNode(': '));
+						
+						let numVotesSpan = document.createElement('span');
+						numVotesSpan.classList.add('num_votes');
+						numVotesSpan.textContent = entry.sz + ' vote(s)';
+						trackCont.appendChild(numVotesSpan);
+						
+						if (trendingEntry.id !== 'trending_host') {
+							trackCont.addEventListener('click', (e) => {
+								ws.send(JSON.stringify({
+									type: MessageTypes.SONG_REQUEST,
+									trackId: trackCont.dataset.trackId
+								}));
+							});
+						}
+						
+						trendingEntry.appendChild(trackCont);
+						
+						//console.log(trendingEntry);
+					}
+				}
+			});
 			break;
 	}
 });

@@ -9,6 +9,7 @@ const querystring = require("querystring");
 const request = require('request');
 const https = require('https');
 const Promise = require('bluebird');
+const TimSort = require('timsort');
 
 const app = express();
 
@@ -76,6 +77,7 @@ function sendTrendingUpdate(code) {
 	for (let [songID, wsSet] of users[code].nextSongEntries) {
 		obj.nextSongs.push([songID, wsSet.size]);
 	}
+	TimSort.sort(obj.nextSongs, (A,B) => B[1] - A[1]);
 	
 	let stringified = JSON.stringify(obj);
 	for (let endpoint of users[code]) {
@@ -153,25 +155,38 @@ wss.on('connection', (ws, req) => {
 				let curMax = 0;
 				let curMaxSong = null;
 				for (let song of users[code].nextSongEntries.keys()) {
-					if (curMax < users[code].nextSongEntries.get(song.trackId).size) {
-						curMax = users[code].nextSongEntries.get(song.trackId).size;
+					if (curMax < users[code].nextSongEntries.get(song).size) {
+						curMax = users[code].nextSongEntries.get(song).size;
 						curMaxSong = song;
 					}
 				}
-				users[code].currentSong = curMaxSong;
-				if (users[code].currentSong) {
-					for (let endpoint of (users[code].nextSongEntries.get(users[code].currentSong.trackId)||[])) {
-						users[code].wsToSong.delete(endpoint);
+				https.get('https://api.napster.com/v2.2/tracks/'+encodeURIComponent(curMaxSong)+'?'+querystring.stringify({apikey: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw'}), res => {
+					//console.log(res.statusCode);
+					if (res.statusCode === 200) {
+						res.setEncoding('utf8');
+						let rawData = '';
+						res.on('data', (chunk) => { rawData += chunk; });
+						res.on('end', () => {
+							let parsed = JSON.parse(rawData);
+							if (parsed.tracks.length >= 1) {
+								users[code].currentSong = {trackId: curMaxSong, trackName: parsed.tracks[0].name, trackArtist: parsed.tracks[0].artistName};
+							}
+							if (users[code].currentSong) {
+								for (let endpoint of (users[code].nextSongEntries.get(users[code].currentSong.trackId)||[])) {
+									users[code].wsToSong.delete(endpoint);
+								}
+								users[code].nextSongEntries.delete(users[code].currentSong.trackId);
+							}
+							ws.send(JSON.stringify({
+								type: MessageTypes.NEXT_SONG,
+								trackId: users[code].currentSong.trackId,
+								trackName: users[code].currentSong.trackName,
+								trackArtist: users[code].currentSong.trackArtist
+							}));
+							sendTrendingUpdate(code);
+						});
 					}
-					users[code].nextSongEntries.delete(users[code].currentSong.trackId);
-				}
-				ws.send(JSON.stringify({
-					type: MessageTypes.NEXT_SONG,
-					trackId: users[code].currentSong.trackId,
-					trackName: users[code].currentSong.trackName,
-					trackArtist: users[code].currentSong.trackArtist
-				}));
-				sendTrendingUpdate(code);
+				});
 				break;
 		}
 	});
