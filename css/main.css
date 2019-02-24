@@ -117,7 +117,10 @@ input:focus {
 #join_button {
 	width: 50%;
 }
-
+#hub_view {
+	width: 50%;
+	float: left;
+}
 #search_view {
 }
 #generate_view {
