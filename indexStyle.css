@@ -1,4 +1,4 @@
-.main-container{
+body {
 
 	display: flex;
 	flex-direction: column;
@@ -7,7 +7,7 @@
 }
 
 
-.main-container input{
+body input{
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: none;
@@ -24,36 +24,31 @@
 	text-align: center;
 	font-family: 'Fredoka One', sans-serif;
 }
-.main-container input::placeholder {
+body input::placeholder {
 	color: rgba(60, 60, 60, 1)
 }
-.main-container input[type=submit]:hover {
+body input[type=submit]:hover {
 	background-color: rgba(17,17,17,1);
 }
-.main-container input[type=text] {
+body input[type=text] {
 	width: 60%;
-	background-color: rgba(100, 100, 100,1)
+	background-color: rgba(120, 120, 120,1)
 }
-.main-container input[type=submit] {
+body input[type=submit] {
 	width: 55%;
 	background-color: rgba(25,25,25,1);
 }
 
-.main-container * {
+main-container * {
 	margin: 5px;
 }
 body {
-	margin: 0;
+	margin: 5px;
 	color: rgba(255,180,1,1);
 	font-family: 'Fredoka One';
 	width: 100%;
 	padding: none;
 	background: rgba(40, 40, 40, 1);
-}
-main {
-	width: 100%;
-	padding: none;
-	margin: none;
 }
 #join_view {
 	margin-left: auto;
@@ -70,6 +65,7 @@ img{
 	height: auto;
 	margin: none;
 	padding: none;
+	max-height: 250px;
 }
 #header_img {
 	max-height: 250px;
@@ -79,4 +75,12 @@ img{
 	width: 40%;
 	padding: none;
 }
-input:focus {outline: none; }
+input:focus {
+	outline: none;
+}
+#search_view {
+	display: none;
+}
+#generate_view {
+	display: none;
+}

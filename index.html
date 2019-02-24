@@ -3,11 +3,12 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<title>iunGO</title>
+		<link rel="stylesheet" href="indexStyle.css" type="text/css" />
 	</head>
 	<body>
+		<div id="header_img"><img src='./images/Iungo_orange.png' /></div>
 		<div id="join_view">
-			<label for="join_code">Enter Join Code</label>
-			<input type="text" id="join_code" name="join_code"/><br />
+			<input type="text" id="join_code" name="join_code" placeholder="Enter Session Code" /><br />
 			<input type="submit" value="Join">
 			<span class="error_msg" id="error_join"></span>
 		</div>
@@ -19,7 +20,7 @@
 			</div>
 		</div>
 		<div id="search_view">
-			<label for="search">Search</label><input type="text" id="search" name="search" />
+			<input type="text" id="search" name="search" placeholder="Search" />
 			<div id="search_results">
 			</div>
 		</div>
