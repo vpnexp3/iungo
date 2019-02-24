@@ -83,7 +83,9 @@ function genCode(ws) {
 	return codeCounter;
 }
 
-function sendTrendingUpdate(code) {
+function sendTrendingUpdate(code, endPointList) {
+	endPointList = endPointList || users[code];
+	
 	let obj = {type: MessageTypes.UPDATE_TRENDING};
 	obj.currentSong = users[code].currentSong;
 	obj.nextSongs = [];
@@ -93,7 +95,7 @@ function sendTrendingUpdate(code) {
 	TimSort.sort(obj.nextSongs, (A,B) => B[1] - A[1]); // needs to be stable
 	
 	let stringified = JSON.stringify(obj);
-	for (let endpoint of users[code]) {
+	for (let endpoint of endPointList) {
 		endpoint.send(stringified);
 	}
 }
@@ -112,6 +114,7 @@ wss.on('connection', (ws, req) => {
 					if (users[obj.code] instanceof Set) {
 						users[obj.code].add(ws);
 						userToCode.set(ws, obj.code);
+						sendTrendingUpdate(obj.code, [ws]);
 						ws.send(JSON.stringify({type: MessageTypes.CONFIRM_JOIN}));
 					} else {
 						ws.send(JSON.stringify({type: MessageTypes.DENY_JOIN, message: 'No such code '+obj.code+'!'}));
