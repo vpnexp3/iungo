@@ -11,7 +11,7 @@ body {
 	background: rgba(40, 40, 40, 1);
 }
 
-#header_img {
+.header_img {
 	margin: 10px auto 40px;
 	height: auto;
 	width: 35%;
@@ -121,7 +121,7 @@ input:focus {
 	background-color: rgb(25, 25, 25);
 	overflow-x: hidden;
 }
-#search {
+#search, #now_playing_client_cont {
 	width: 100%;
 	background-color: rgb(120, 120, 120);
 	height: 50px;
@@ -131,13 +131,59 @@ input:focus {
 	color: rgb(255, 180, 1);
 	font-size: 20px;
 	font-family: 'Fredoka One', sans-serif;
+	border-bottom: 1px solid rgb(255, 180, 1);
 }
 #search::placeholder {
 	color: rgb(60, 60, 60)
 }
+#search_results {
+	height: calc(100% - 54px);
+	overflow-y: scroll;
+}
+#search_results::-webkit-scrollbar	{
+	background: none;
+	width: 5px;
+}
+#search_results::-webkit-scrollbar-thumb {
+	background-color: rgb(255, 180, 1);
+	border-radius: 3px;
+}
 .track_container {
 	width: 100%;
+	border-bottom: 1px solid rgb(255, 180, 1);
+	text-align: center;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	overflow: hidden;
+}
+.track_container:hover {
+	background-color: rgb(17, 17, 17);
+}
+#now_playing_client_cont {
+	padding-top: 0px;
+	padding-bottom: 0;
 	height: 50px;
 }
 #generate_view {
+	width: 100%;
+}
+#generate_view input[type=submit]{
+	display: block;
+	/* float: left; */
+	margin: 0 7.5%;
+	width: 35%;
+	padding: 0;
+	margin: 0 auto 7px;
+	padding: 0px;
+	display: block;
+	border-radius: 10px;
+	border-style: solid;
+	border-color: rgba(255,180,1,1);
+	height: 50px;
+	font-size: 20px;
+	color: rgba(255,180,1,1);
+	box-shadow: none;
+	text-align: center;
+	font-family: 'Fredoka One', sans-serif;
+	background-color: rgba(25,25,25,1);
 }
