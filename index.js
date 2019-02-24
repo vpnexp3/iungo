@@ -15,6 +15,8 @@ const nocache = require('nocache');
 
 const app = express();
 
+let port = process.env.PORT || 8000;
+
 app.engine('html', mustacheExpress());
 app.set('views', __dirname + '/templates');
 app.set('view engine', 'html');
@@ -27,7 +29,7 @@ app.get('/host', (req,res) => {
 	let path = 'https://api.rhapsody.com/oauth/authorize?' + querystring.stringify({
 		response_type: 'code',
 		client_id: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw',
-		redirect_uri: req.protocol+'://'+req.hostname + ':' + 8000 + '/authorize'
+		redirect_uri: req.protocol+'://'+req.hostname + ':' + port + '/authorize'
 	});
 	res.redirect(path);
 });
@@ -40,13 +42,13 @@ app.get('/authorize', (clientRequest, clientResponse) => {
 			client_secret: process.env.RHAPSODY_SECRET,
 			response_type: 'code',
 			code: clientRequest.query.code,
-			redirect_uri: clientRequest.protocol+'://'+clientRequest.hostname + ':' + 8000 + '/authorize',
+			redirect_uri: clientRequest.protocol+'://'+clientRequest.hostname + ':' + port + '/authorize',
 			grant_type: 'authorization_code'
 		}
 	}, (error, response, body) => {
 		//console.log(body);
 		body = JSON.parse(body);
-		clientResponse.redirect(clientRequest.protocol+'://'+clientRequest.hostname + ':' + 8000 + '?' + querystring.stringify({
+		clientResponse.redirect(clientRequest.protocol+'://'+clientRequest.hostname + ':' + port + '?' + querystring.stringify({
 			accessToken: body.access_token,
 			refreshToken: body.refresh_token
 		}));
@@ -62,7 +64,7 @@ let codeCounter = 0;
 const users = new Array(100000);
 const userToCode = new Map();
 
-const httpServer = app.listen(8000);
+const httpServer = app.listen(port);
 const wss = new WebSocket.Server({server: httpServer});
 
 function genCode(ws) {
