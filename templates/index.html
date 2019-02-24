@@ -36,11 +36,10 @@
 		</div>
 
 		<div id="search_view" style="display:none;">
-			{{#isMobile}}<input type="submit" name="to_hub" id="to_hub" value="Search songs" />{{/isMobile}}
 			<input type="text" id="search" name="search" placeholder="Search" />
 			<div id="search_results">
 				<div id="search_view-inner">
-					{{ isMobile ? '<input type="submit" name="to_hub" id="to_hub" value="Search songs" />' : '' }}
+					{{#isMobile}}<input type="submit" name="to_hub" id="to_hub" value="Search songs" />{{/isMobile}}
 					<input type="text" id="search" name="search" placeholder="Search" />
 				<div id="search_results">
 				</div>
