@@ -246,5 +246,22 @@ window.addEventListener('message', event => {
 		}
 		
 		elapsedTime.textContent = mins + ':' + secs;
+		elapsedTime.dataset.time = time.toString();
+	}
+});
+
+let playPause = document.getElementById('play_pause');
+playPause.addEventListener('click', () => {
+	if (playPause.value === 'Pause') {
+		playPause.value = 'Resume';
+		napsterPromise.then(() => Napster.player.pause());
+	} else {
+		playPause.value = 'Pause';
+		napsterPromise.then(() => {
+			//console.log('Resuming');
+			Napster.player.play(Napster.player.currentTrack);
+			let time = parseFloat(elapsedTime.dataset.time);
+			if (!isNaN(time)) Napster.player.seek(time);
+		});
 	}
 });
