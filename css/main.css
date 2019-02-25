@@ -1,3 +1,4 @@
+/*noinspection CssUnknownTarget*/
 @import url('https://fonts.googleapis.com/css?family=Fredoka+One');
 
 body {
@@ -36,11 +37,10 @@ img{
 }
 #join_view input{
 	margin: 0 auto 7px;
-	padding: 0px;
+	padding: 0;
 	display: block;
 	border-radius: 10px;
-	border-style: solid;
-	border-color: rgba(255,180,1,1);
+	border: solid rgba(255, 180, 1, 1);
 	height: 50px;
 	font-size: 20px;
 	color: rgba(255,180,1,1);
@@ -70,14 +70,14 @@ input:focus {
 }
 #join_view #jleft {
 	box-sizing: border-box;
-	width: calc(50% - 1.5px);
+	width: calc((100% - 3px) / 2);
 	float: left;
 	height: 100%;
 	padding: auto;
 }
 #join_view #jright {
 	box-sizing: border-box;
-	width: calc(50% - 1.5px);
+	width: calc((100% - 3px) / 2);
 	float: right;
 	height: 100%;
 	padding: auto;
@@ -115,7 +115,7 @@ input:focus {
 #hub_view-inner, #search_view-inner {
 	width: 80%;
 	height: 88vh;
-	margin: 05vh 10% 0%;
+	margin: 5vh 10% 0;
 	border: 3px solid rgb(255, 180, 1);
 	border-radius: 30px;
 	background-color: rgb(25, 25, 25);
@@ -160,7 +160,7 @@ input:focus {
 	background-color: rgb(17, 17, 17);
 }
 #now_playing_client_cont {
-	padding-top: 0px;
+	padding-top: 0;
 	padding-bottom: 0;
 	height: 50px;
 }
@@ -170,15 +170,11 @@ input:focus {
 #generate_view input[type=submit]{
 	display: block;
 	/* float: left; */
-	margin: 0 7.5%;
 	width: 35%;
-	padding: 0;
 	margin: 0 auto 7px;
-	padding: 0px;
-	display: block;
+	padding: 0;
 	border-radius: 10px;
-	border-style: solid;
-	border-color: rgba(255,180,1,1);
+	border: solid rgba(255, 180, 1, 1);
 	height: 50px;
 	font-size: 20px;
 	color: rgba(255,180,1,1);
@@ -186,4 +182,11 @@ input:focus {
 	text-align: center;
 	font-family: 'Fredoka One', sans-serif;
 	background-color: rgba(25,25,25,1);
+}
+#code_display {
+	font-size: 2em;
+	text-align: center;
+}
+#code_display > .code_display {
+	font-size: 3em;
 }

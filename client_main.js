@@ -15,7 +15,7 @@ ViewManager.addView('generate_view');
 ViewManager.addView('code_view');
 ViewManager.addView('hub_view');
 
-if (!isMobile) ViewManager.linkViews('hub_vote', 'hub_view', 'search_view'); // TODO do not link if mobile
+if (!isMobile) ViewManager.linkViews('hub_vote', 'hub_view', 'search_view');
 
 ViewManager.setView(NapsterUtils.getParameters().accessToken ? 'generate_view' : 'join_view');
 

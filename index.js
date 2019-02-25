@@ -116,6 +116,19 @@ wss.on('connection', (ws, req) => {
 		});
 	}, 30000);
 	
+	ws.on('close', () => {
+		if (userToCode.has(ws)) {
+			let code = userToCode.get(ws);
+			users[code].delete(ws);
+			userToCode.delete(ws);
+			if (users[code].wsToSong.has(ws)) {
+				let songId = users[code].wsToSong.get(ws);
+				(users[code].nextSongEntries.get(songId)||new Set()).delete(ws);
+			}
+			sendTrendingUpdate(code);
+		}
+	});
+	
 	ws.on('message', data => {
 		let code = userToCode.get(ws);
 		let obj = JSON.parse(data);
