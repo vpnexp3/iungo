@@ -7,8 +7,7 @@
 		{{#isMobile}}<link rel="stylesheet" href="/css/mobile.css" type="text/css" />{{/isMobile}}
 	</head>
 	<body>
-
-		<div id="join_view">
+		<div id="join_view" style="display:none;">
 			<div class="header_img"><img src='/images/iungo_orange.svg' /></div>
 			<div id="jleft">
 				<div id="jleft-inner">
@@ -41,8 +40,8 @@
 				<div id="search_results">
 				</div>
 				{{#isMobile}}<input type="submit" name="to_hub" id="to_hub" value="Search songs" />{{/isMobile}}
+			</div>
 		</div>
-	</div>
 
 		<div id="generate_view" style="display:none;">
 			<div class="header_img"><img src='/images/iungo_orange.svg' /></div>
@@ -50,9 +49,8 @@
 			<input type="submit" name="to_join" id="to_join" value="Join a Session" />
 		</div>
 		<div id="code_view" style="display:none;">
-			<div id="now_playing_cont" style="display:none;">
-				Now playing: <span id="current_track"></span> by <span id="current_artist"></span> (<span id="elapsed_time"></span>)<br />
-				<input type="submit" name="play_pause" id="play_pause" value="Pause" />
+			<div id="now_playing_cont" style="display:none;" class="clearfix">
+				Now playing: <span id="current_track"></span> by <span id="current_artist"></span> (<span id="elapsed_time"></span>) <input type="submit" name="play_pause" id="play_pause" value="Pause" />
 			</div>
 			<div id="code_display">Enter this code to join:<br /><span class="code_display"></span></div>
 			<div class="trending" id="trending_host">
@@ -60,6 +58,8 @@
 		</div>
 
 		<script>
+			// variable used in output.js
+			// noinspection JSUnusedLocalSymbols
 			let isMobile = {{isMobile}};
 		</script>
 		<script src="/build/jquery-1.12.4.min.js"></script>

@@ -204,33 +204,45 @@ wss.on('connection', (ws, req) => {
 						curMaxSong = song;
 					}
 				}
-				https.get('https://api.napster.com/v2.2/tracks/'+encodeURIComponent(curMaxSong)+'?'+querystring.stringify({apikey: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw'}), res => {
-					//console.log(res.statusCode);
-					if (res.statusCode === 200) {
-						res.setEncoding('utf8');
-						let rawData = '';
-						res.on('data', (chunk) => { rawData += chunk; });
-						res.on('end', () => {
-							let parsed = JSON.parse(rawData);
-							if (parsed.tracks.length >= 1) {
-								users[code].currentSong = {trackId: curMaxSong, trackName: parsed.tracks[0].name, trackArtist: parsed.tracks[0].artistName};
-							}
-							if (users[code].currentSong) {
-								for (let endpoint of (users[code].nextSongEntries.get(users[code].currentSong.trackId)||[])) {
-									users[code].wsToSong.delete(endpoint);
+				if (curMaxSong) {
+					https.get('https://api.napster.com/v2.2/tracks/' + encodeURIComponent(curMaxSong) + '?' + querystring.stringify({apikey: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw'}), res => {
+						//console.log(res.statusCode);
+						if (res.statusCode === 200) {
+							res.setEncoding('utf8');
+							let rawData = '';
+							res.on('data', (chunk) => {
+								rawData += chunk;
+							});
+							res.on('end', () => {
+								let parsed = JSON.parse(rawData);
+								if (parsed.tracks.length >= 1) {
+									users[code].currentSong = {
+										trackId: curMaxSong,
+										trackName: parsed.tracks[0].name,
+										trackArtist: parsed.tracks[0].artistName
+									};
 								}
-								users[code].nextSongEntries.delete(users[code].currentSong.trackId);
-							}
-							ws.send(JSON.stringify({
-								type: MessageTypes.NEXT_SONG,
-								trackId: users[code].currentSong.trackId,
-								trackName: users[code].currentSong.trackName,
-								trackArtist: users[code].currentSong.trackArtist
-							}));
-							sendTrendingUpdate(code);
-						});
-					}
-				});
+								if (users[code].currentSong) {
+									for (let endpoint of (users[code].nextSongEntries.get(users[code].currentSong.trackId) || [])) {
+										users[code].wsToSong.delete(endpoint);
+									}
+									users[code].nextSongEntries.delete(users[code].currentSong.trackId);
+								}
+								ws.send(JSON.stringify(users[code].currentSong ? {
+									type: MessageTypes.NEXT_SONG,
+									trackId: users[code].currentSong.trackId,
+									trackName: users[code].currentSong.trackName,
+									trackArtist: users[code].currentSong.trackArtist
+								} : {type: MessageTypes.NEXT_SONG}));
+								sendTrendingUpdate(code);
+							});
+						}
+					});
+				} else {
+					users[code].currentSong = null;
+					ws.send(JSON.stringify({type: MessageTypes.NEXT_SONG}));
+					sendTrendingUpdate(code);
+				}
 				break;
 		}
 	});

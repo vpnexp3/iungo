@@ -1,6 +1,11 @@
 /*noinspection CssUnknownTarget*/
 @import url('https://fonts.googleapis.com/css?family=Fredoka+One');
 
+.clearfix::after {
+	content: "";
+	clear: both;
+	display: table;
+}
 body {
 	display: block;
 	margin: 0;
@@ -35,31 +40,27 @@ img{
 	height: 40%;
 	padding: 5px;
 }
-#join_view input{
+input[type=submit], #join_view input {
 	margin: 0 auto 7px;
-	padding: 0;
+	padding: 0 1em;
 	display: block;
 	border-radius: 10px;
 	border: solid rgba(255, 180, 1, 1);
 	height: 50px;
 	font-size: 20px;
 	color: rgba(255,180,1,1);
-	box-shadow: none;
 	text-align: center;
 	font-family: 'Fredoka One', sans-serif;
+	background-color: rgba(25,25,25,1);
 }
-#join_view input::placeholder {
+input::placeholder {
 	color: rgba(60, 60, 60, 1)
 }
-#join_view input[type=submit]:hover {
+input[type=submit]:hover {
 	background-color: rgba(17,17,17,1);
 }
 #join_view input[type=text] {
-	width: 100%;
 	background-color: rgba(120, 120, 120,1)
-}
-#join_view input[type=submit] {
-	background-color: rgba(25,25,25,1);
 }
 #to_host {
 	width: 100%;
@@ -68,33 +69,19 @@ img{
 input:focus {
 	outline: none;
 }
-#join_view #jleft {
+#jleft, #jright {
 	box-sizing: border-box;
 	width: calc((100% - 3px) / 2);
 	float: left;
 	height: 100%;
 	padding: auto;
-}
-#join_view #jright {
-	box-sizing: border-box;
-	width: calc((100% - 3px) / 2);
-	float: right;
-	height: 100%;
-	padding: auto;
-}
-#jleft-inner {
-	width: 60%;
-	margin: auto;
 	position: relative;
-	top: 50%;
-	transform: translateY(-50%);
 }
-#jright-inner {
-	width: 60%;
-	margin: auto;
-	position: relative;
+#jleft-inner, #jright-inner {
+	position: absolute;
 	top: 50%;
-	transform: translateY(-50%);
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 #divider {
 	width: 3px;
@@ -125,16 +112,12 @@ input:focus {
 	width: 100%;
 	background-color: rgb(120, 120, 120);
 	height: 50px;
-	box-shadow: none;
 	text-align: center;
 	border: none;
 	color: rgb(255, 180, 1);
 	font-size: 20px;
 	font-family: 'Fredoka One', sans-serif;
 	border-bottom: 1px solid rgb(255, 180, 1);
-}
-#search::placeholder {
-	color: rgb(60, 60, 60)
 }
 #search_results {
 	height: calc(100% - 54px);
@@ -167,26 +150,30 @@ input:focus {
 #generate_view {
 	width: 100%;
 }
-#generate_view input[type=submit]{
-	display: block;
-	/* float: left; */
-	width: 35%;
-	margin: 0 auto 7px;
-	padding: 0;
-	border-radius: 10px;
-	border: solid rgba(255, 180, 1, 1);
-	height: 50px;
-	font-size: 20px;
-	color: rgba(255,180,1,1);
-	box-shadow: none;
-	text-align: center;
-	font-family: 'Fredoka One', sans-serif;
-	background-color: rgba(25,25,25,1);
-}
 #code_display {
 	font-size: 2em;
 	text-align: center;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 2em;
+	border: 3px solid rgba(255, 180, 1, 1);
+	border-radius: 1em;
 }
 #code_display > .code_display {
 	font-size: 3em;
+}
+#now_playing_cont {
+	padding: 0.5em;
+	border-bottom: 2px solid rgba(255, 180, 1, 1);
+}
+#input[type=submit], .track_container, #play_pause {
+	cursor: pointer;
+}
+#play_pause {
+	margin: 0.5em;
+	padding: 0 0.5em;
+	font-size: 0.8em;
+	float: right;
 }
