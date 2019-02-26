@@ -168,7 +168,7 @@ input:focus {
 	padding: 0.5em;
 	border-bottom: 2px solid rgba(255, 180, 1, 1);
 }
-.input[type=submit], .track_container {
+input[type=submit], .track_container {
 	cursor: pointer;
 }
 #play_pause {
