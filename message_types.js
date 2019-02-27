@@ -11,4 +11,5 @@ module.exports = {
 	SONG_REQUEST: 'song_request',
 	NEXT_SONG: 'next_song',
 	UPDATE_TRENDING: 'update_trending',
+	HOST_DISCONNECT: 'host_disconnect',
 };

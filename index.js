@@ -100,6 +100,29 @@ function sendTrendingUpdate(code, endPointList) {
 	}
 }
 
+function cleanup(ws, doCheckHost) {
+	if (userToCode.has(ws)) {
+		let code = userToCode.get(ws);
+		let isHost = doCheckHost && (ws === users[code][Symbol.iterator]().next().value);
+		users[code].delete(ws);
+		userToCode.delete(ws);
+		if (users[code].wsToSong.has(ws)) {
+			let songId = users[code].wsToSong.get(ws);
+			(users[code].nextSongEntries.get(songId)||new Set()).delete(ws);
+			users[code].wsToSong.delete(ws);
+		}
+		if (isHost) {
+			for (let endpoint of users[code]) {
+				cleanup(endpoint, false);
+			}
+		} else if (doCheckHost) {
+			sendTrendingUpdate(code);
+		} else {
+			ws.send(JSON.stringify({type: MessageTypes.HOST_DISCONNECT}));
+		}
+	}
+}
+
 wss.on('connection', (ws, req) => {
 	ws.isAlive = true;
 	
@@ -117,16 +140,7 @@ wss.on('connection', (ws, req) => {
 	}, 30000);
 	
 	ws.on('close', () => {
-		if (userToCode.has(ws)) {
-			let code = userToCode.get(ws);
-			users[code].delete(ws);
-			userToCode.delete(ws);
-			if (users[code].wsToSong.has(ws)) {
-				let songId = users[code].wsToSong.get(ws);
-				(users[code].nextSongEntries.get(songId)||new Set()).delete(ws);
-			}
-			sendTrendingUpdate(code);
-		}
+		cleanup(ws, true);
 	});
 	
 	ws.on('message', data => {
@@ -150,48 +164,43 @@ wss.on('connection', (ws, req) => {
 				}
 				break;
 			case MessageTypes.SONG_REQUEST:
-				https.get('https://api.napster.com/v2.2/tracks/'+encodeURIComponent(obj.trackId)+'?'+querystring.stringify({apikey: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw'}), res => {
+				request.get('https://api.napster.com/v2.2/tracks/'+encodeURIComponent(obj.trackId)+'?'+querystring.stringify({apikey: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw'}), (err, resp, body) => {
 					//console.log(res.statusCode);
-					if (res.statusCode === 200) {
-						res.setEncoding('utf8');
-						let rawData = '';
-						res.on('data', (chunk) => { rawData += chunk; });
-						res.on('end', () => {
-							let parsed = JSON.parse(rawData);
-							if (parsed.tracks.length >= 1) {
-								if (!users[code].nextSongEntries.has(obj.trackId)) {
-									users[code].nextSongEntries.set(obj.trackId, new Set());
-								}
-								users[code].nextSongEntries.get(obj.trackId).add(ws);
-								
-								if (users[code].wsToSong.has(ws)) { // delete previous
-									users[code].nextSongEntries.get(users[code].wsToSong.get(ws)).delete(ws);
-								}
-								users[code].wsToSong.set(ws, obj.trackId);
-								//console.log(obj.trackId);
-								
-								//console.log('Queueing '+obj.trackId);
-								
-								if (users[code].currentSong === null) {
-									users[code].currentSong = {trackId: obj.trackId, trackName: parsed.tracks[0].name, trackArtist: parsed.tracks[0].artistName};
-									
-									for (let endpoint of (users[code].nextSongEntries.get(users[code].currentSong.trackId)||[])) {
-										users[code].wsToSong.delete(endpoint);
-									}
-									users[code].nextSongEntries.delete(users[code].currentSong.trackId);
-									// grab host
-									users[code][Symbol.iterator]().next().value.send(
-										JSON.stringify({
-											type: MessageTypes.NEXT_SONG,
-											trackId: users[code].currentSong.trackId,
-											trackName: users[code].currentSong.trackName,
-											trackArtist: users[code].currentSong.trackArtist
-										}));
-								}
-								
-								sendTrendingUpdate(code);
+					if (resp.statusCode === 200) {
+						let parsed = JSON.parse(body);
+						if (parsed.tracks.length >= 1) {
+							if (!users[code].nextSongEntries.has(obj.trackId)) {
+								users[code].nextSongEntries.set(obj.trackId, new Set());
 							}
-						});
+							users[code].nextSongEntries.get(obj.trackId).add(ws);
+							
+							if (users[code].wsToSong.has(ws)) { // delete previous
+								users[code].nextSongEntries.get(users[code].wsToSong.get(ws)).delete(ws);
+							}
+							users[code].wsToSong.set(ws, obj.trackId);
+							//console.log(obj.trackId);
+							
+							//console.log('Queueing '+obj.trackId);
+							
+							if (users[code].currentSong === null) {
+								users[code].currentSong = {trackId: obj.trackId, trackName: parsed.tracks[0].name, trackArtist: parsed.tracks[0].artistName};
+								
+								for (let endpoint of (users[code].nextSongEntries.get(users[code].currentSong.trackId)||[])) {
+									users[code].wsToSong.delete(endpoint);
+								}
+								users[code].nextSongEntries.delete(users[code].currentSong.trackId);
+								// grab host
+								users[code][Symbol.iterator]().next().value.send(
+									JSON.stringify({
+										type: MessageTypes.NEXT_SONG,
+										trackId: users[code].currentSong.trackId,
+										trackName: users[code].currentSong.trackName,
+										trackArtist: users[code].currentSong.trackArtist
+									}));
+							}
+							
+							sendTrendingUpdate(code);
+						}
 					}
 				});
 				break;
@@ -205,37 +214,30 @@ wss.on('connection', (ws, req) => {
 					}
 				}
 				if (curMaxSong) {
-					https.get('https://api.napster.com/v2.2/tracks/' + encodeURIComponent(curMaxSong) + '?' + querystring.stringify({apikey: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw'}), res => {
+					request.get('https://api.napster.com/v2.2/tracks/' + encodeURIComponent(curMaxSong) + '?' + querystring.stringify({apikey: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw'}), (err, resp, body) => {
 						//console.log(res.statusCode);
-						if (res.statusCode === 200) {
-							res.setEncoding('utf8');
-							let rawData = '';
-							res.on('data', (chunk) => {
-								rawData += chunk;
-							});
-							res.on('end', () => {
-								let parsed = JSON.parse(rawData);
-								if (parsed.tracks.length >= 1) {
-									users[code].currentSong = {
-										trackId: curMaxSong,
-										trackName: parsed.tracks[0].name,
-										trackArtist: parsed.tracks[0].artistName
-									};
+						if (resp.statusCode === 200) {
+							let parsed = JSON.parse(body);
+							if (parsed.tracks.length >= 1) {
+								users[code].currentSong = {
+									trackId: curMaxSong,
+									trackName: parsed.tracks[0].name,
+									trackArtist: parsed.tracks[0].artistName
+								};
+							}
+							if (users[code].currentSong) {
+								for (let endpoint of (users[code].nextSongEntries.get(users[code].currentSong.trackId) || [])) {
+									users[code].wsToSong.delete(endpoint);
 								}
-								if (users[code].currentSong) {
-									for (let endpoint of (users[code].nextSongEntries.get(users[code].currentSong.trackId) || [])) {
-										users[code].wsToSong.delete(endpoint);
-									}
-									users[code].nextSongEntries.delete(users[code].currentSong.trackId);
-								}
-								ws.send(JSON.stringify(users[code].currentSong ? {
-									type: MessageTypes.NEXT_SONG,
-									trackId: users[code].currentSong.trackId,
-									trackName: users[code].currentSong.trackName,
-									trackArtist: users[code].currentSong.trackArtist
-								} : {type: MessageTypes.NEXT_SONG}));
-								sendTrendingUpdate(code);
-							});
+								users[code].nextSongEntries.delete(users[code].currentSong.trackId);
+							}
+							ws.send(JSON.stringify(users[code].currentSong ? {
+								type: MessageTypes.NEXT_SONG,
+								trackId: users[code].currentSong.trackId,
+								trackName: users[code].currentSong.trackName,
+								trackArtist: users[code].currentSong.trackArtist
+							} : {type: MessageTypes.NEXT_SONG}));
+							sendTrendingUpdate(code);
 						}
 					});
 				} else {

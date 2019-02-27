@@ -17,7 +17,7 @@ ViewManager.addView('hub_view');
 
 if (!isMobile) ViewManager.linkViews('hub_vote', 'hub_view', 'search_view');
 
-ViewManager.setView(NapsterUtils.getParameters().accessToken ? 'generate_view' : 'join_view');
+ViewManager.setView('join_view');
 
 Napster.init({consumerKey: 'ZmZjNTMwOTEtYmQ1MC00MGY0LThhNmYtMmQzNmEwNGZhMzIw', isHTML5Compatible: true});
 
@@ -148,6 +148,9 @@ ws.addEventListener('message', event => {
 				}
 			});
 			break;
+		case MessageTypes.HOST_DISCONNECT:
+			ViewManager.setView('join_view');
+			alert('Host disconnected');
 	}
 });
 
@@ -206,8 +209,9 @@ Napster.player.on('ready', e => {
 	let params = NapsterUtils.getParameters();
 	if (params.accessToken) {
 		Napster.member.set(params);
+		ViewManager.setView('generate_view');
+		napsterPromise.resolve();
 	}
-	napsterPromise.resolve();
 	//console.log(params);
 });
 
