@@ -1,0 +1,22 @@
+{
+  "name": "iungo",
+  "version": "0.0.1",
+  "description": "iunGO crowd music voting system.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vpnexp3/iungo.git"
+  },
+  "author": "Epikastema",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vpnexp3/iungo/issues"
+  },
+  "homepage": "https://github.com/vpnexp3/iungo#readme",
+  "dependencies": {
+    "ws": "^6.2.0"
+  }
+}
