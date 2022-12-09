@@ -14,7 +14,7 @@
 		"bluebird": "^3.5.3",
 		"buffer": "^5.2.1",
 		"bytebuffer": "^5.0.1",
-		"express": "^4.16.4",
+		"express": "^4.17.3",
 		"mustache-express": "^1.2.8",
 		"nocache": "^2.0.0",
 		"request": "^2.88.0",
